@@ -69,7 +69,8 @@ public class NoFallA extends CheckVersion {
 				// return;
 				// }
 
-				Bukkit.broadcastMessage("from: " + from.toString() + ", to: " + to.toString());
+				// Bukkit.broadcastMessage("from: " + from.toString() + ", to: "
+				// + to.toString());
 
 				// The player has fallen far enough to take damage.
 
@@ -80,8 +81,15 @@ public class NoFallA extends CheckVersion {
 
 					if (!behaviour.isInWater() && !behaviour.isInWeb() && !player.isInsideVehicle()
 							&& !player.isSleeping()) {
-						final double expected = Math.max(player.getHealth() - getExpectedDamage(profile, fallDistance),
-								0);
+
+						/*
+						 * Their expected health cannot be higher than their
+						 * maximum allowed health and cannot be lower then zero.
+						 */
+						final double expected = Math
+								.max(Math.min(player.getHealth() - getExpectedDamage(profile, fallDistance),
+										player.getMaxHealth()), 0.0);
+
 						/*
 						 * Reset the lastY value. The player is now on the
 						 * ground.

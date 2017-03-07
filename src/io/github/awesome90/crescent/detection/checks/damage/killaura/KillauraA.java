@@ -1,7 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -36,8 +34,6 @@ public class KillauraA extends CheckVersion {
 			hits++;
 
 			final double hitsPerSecond = getHitsPerSecond();
-
-			Bukkit.broadcastMessage(ChatColor.AQUA + "" + hitsPerSecond);
 		}
 	}
 

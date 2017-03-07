@@ -25,7 +25,7 @@ public class KillauraB extends CheckVersion {
 				return;
 			}
 
-			if (!isInLineOfSight(edbe.getEntity(), 1.0)) {
+			if (!isInLineOfSight(edbe.getEntity(), 2.0)) {
 				callback(true);
 			}
 		}
