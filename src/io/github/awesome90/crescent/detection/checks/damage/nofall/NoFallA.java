@@ -63,7 +63,7 @@ public class NoFallA extends CheckVersion {
 
 				if (fallDistance < 4.0) {
 					/*
-					 * The player has not fallen enough to take fall damage.
+					 * The player has not fallen enough distance to take fall damage.
 					 */
 					return;
 				}
