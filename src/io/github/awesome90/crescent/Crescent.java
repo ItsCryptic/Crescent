@@ -77,6 +77,8 @@ public class Crescent extends JavaPlugin {
 		this.getConfig().set("killaura.c.disallowedAngle", 120);
 
 		this.getConfig().set("reach.a.allowedReach", 4.75);
+		this.getConfig().set("reach.a.allowedReachDifference", 0.25);
+		this.getConfig().set("reach.a.reachDataValidation", 25);
 
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
