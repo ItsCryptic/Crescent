@@ -10,10 +10,11 @@ import org.bukkit.entity.Player;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;
-import io.github.awesome90.crescent.detection.checks.damage.antiknockback.Antiknockback;
+import io.github.awesome90.crescent.detection.checks.damage.antiknockback.AntiVelocity;
 import io.github.awesome90.crescent.detection.checks.damage.criticals.Criticals;
 import io.github.awesome90.crescent.detection.checks.damage.killaura.Killaura;
 import io.github.awesome90.crescent.detection.checks.damage.nofall.NoFall;
+import io.github.awesome90.crescent.detection.checks.damage.reach.Reach;
 import io.github.awesome90.crescent.detection.checks.health.fastheal.FastHeal;
 import io.github.awesome90.crescent.detection.checks.interact.fastbow.Fastbow;
 import io.github.awesome90.crescent.detection.checks.movement.fly.Fly;
@@ -61,7 +62,7 @@ public class Profile {
 	 * Add the cheat checks so that they can be utilised.
 	 */
 	private void addChecks() {
-		checks.add(new Antiknockback(this));
+		checks.add(new AntiVelocity(this));
 		checks.add(new NoFall(this));
 		checks.add(new Fastbow(this));
 		checks.add(new Fly(this));
@@ -73,6 +74,7 @@ public class Profile {
 		checks.add(new HighJump(this));
 		checks.add(new Criticals(this));
 		checks.add(new Timer(this));
+		checks.add(new Reach(this));
 	}
 
 	public UUID getUUID() {

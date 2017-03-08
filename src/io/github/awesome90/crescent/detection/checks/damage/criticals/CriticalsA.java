@@ -31,8 +31,9 @@ public class CriticalsA extends CheckVersion {
 	private boolean canDealCritical() {
 		final Player player = profile.getPlayer();
 		final Behaviour behaviour = profile.getBehaviour();
-		return player.getFallDistance() > 0 && behaviour.isOnGround() && !behaviour.isOnLadder()
-				&& !behaviour.isOnVine() && !behaviour.isInWater()
+		final double y = player.getLocation().getY();
+		return player.getFallDistance() > 0 && y % 1.0 != 0.0 && y % 0.5 != 0.0 && behaviour.isOnGround()
+				&& !behaviour.isOnLadder() && !behaviour.isOnVine() && !behaviour.isInWater()
 				&& !player.hasPotionEffect(PotionEffectType.BLINDNESS) && !player.isInsideVehicle()
 				&& !player.isSprinting();
 	}

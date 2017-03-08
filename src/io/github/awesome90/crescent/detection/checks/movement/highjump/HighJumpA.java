@@ -1,13 +1,9 @@
 package io.github.awesome90.crescent.detection.checks.movement.highjump;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
-import io.github.awesome90.crescent.events.PlayerJumpEvent;
 
 public class HighJumpA extends CheckVersion {
 
@@ -17,50 +13,50 @@ public class HighJumpA extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
-		if (event instanceof PlayerJumpEvent) {
-			PlayerJumpEvent pje = (PlayerJumpEvent) event;
-
-			final double distance = pje.getDistance();
-
-			/*
-			 * Before declaring the player as suspicious, check if they have a
-			 * jump boost potion effect.
-			 */
-
-			final Player player = profile.getPlayer();
-
-			int jumpLevel = 0;
-
-			for (PotionEffect effect : player.getActivePotionEffects()) {
-				if (effect.equals(PotionEffectType.JUMP)) {
-					jumpLevel = effect.getAmplifier();
-					break;
-				}
-			}
-
-			double allowedExtra = 0.0;
-
-			switch (jumpLevel) {
-			case 1:
-				/*
-				 * https://www.reddit.com/r/minecraftsuggestions/comments/
-				 * 3b0nfq/potion_of_jumping_not_strong_enough/
-				 */
-				allowedExtra += 0.25;
-				break;
-			case 2:
-				/*
-				 * Source:
-				 * http://minecraft.gamepedia.com/Potion#Potion_of_Leaping
-				 */
-				allowedExtra += 0.75;
-				break;
-			}
-
-			if (!isAllowed(distance, allowedExtra)) {
-				callback(true);
-			}
-		}
+		// if (event instanceof PlayerJumpEvent) {
+		// PlayerJumpEvent pje = (PlayerJumpEvent) event;
+		//
+		// final double distance = pje.getDistance();
+		//
+		// /*
+		// * Before declaring the player as suspicious, check if they have a
+		// * jump boost potion effect.
+		// */
+		//
+		// final Player player = profile.getPlayer();
+		//
+		// int jumpLevel = 0;
+		//
+		// for (PotionEffect effect : player.getActivePotionEffects()) {
+		// if (effect.equals(PotionEffectType.JUMP)) {
+		// jumpLevel = effect.getAmplifier();
+		// break;
+		// }
+		// }
+		//
+		// double allowedExtra = 0.0;
+		//
+		// switch (jumpLevel) {
+		// case 1:
+		// /*
+		// * https://www.reddit.com/r/minecraftsuggestions/comments/
+		// * 3b0nfq/potion_of_jumping_not_strong_enough/
+		// */
+		// allowedExtra += 0.25;
+		// break;
+		// case 2:
+		// /*
+		// * Source:
+		// * http://minecraft.gamepedia.com/Potion#Potion_of_Leaping
+		// */
+		// allowedExtra += 0.75;
+		// break;
+		// }
+		//
+		// if (!isAllowed(distance, allowedExtra)) {
+		// callback(true);
+		// }
+		// }
 	}
 
 	/**

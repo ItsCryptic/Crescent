@@ -6,6 +6,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.util.Vector;
 
+import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
@@ -36,9 +37,13 @@ public class KillauraC extends CheckVersion {
 			// direction.
 			change.setDirection(target.subtract(start));
 
+			/*
+			 * Find the remainder of the difference in yaw divided by 180. This
+			 * is the angle of attack. This should never be negative.
+			 */
 			final double angle = Math.abs((change.getYaw() - original.getYaw()) % 180);
 
-			if (angle > 90.0) {
+			if (angle > Crescent.getInstance().getConfig().getInt("killaura.c.disallowedAngle")) {
 				callback(true);
 			}
 		}

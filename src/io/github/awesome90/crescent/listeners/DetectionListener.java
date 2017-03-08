@@ -1,19 +1,17 @@
 package io.github.awesome90.crescent.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerVelocityEvent;
 
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
-import io.github.awesome90.crescent.events.PlayerJumpEvent;
 import io.github.awesome90.crescent.info.Profile;
 
 public class DetectionListener implements Listener {
@@ -39,11 +37,13 @@ public class DetectionListener implements Listener {
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
 		if (event.getEntity() instanceof Player) {
 			final Player player = (Player) event.getEntity();
+
 			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
 		}
 
 		if (event.getDamager() instanceof Player) {
 			final Player player = (Player) event.getDamager();
+
 			getCheckVersion(player, CheckType.CRITICALS, "A").call(event);
 
 			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
@@ -53,18 +53,9 @@ public class DetectionListener implements Listener {
 			getCheckVersion(player, CheckType.KILLAURA, "C").call(event);
 
 			getCheckVersion(player, CheckType.KILLAURA, "D").call(event);
+			
+			getCheckVersion(player, CheckType.REACH, "A").call(event);
 		}
-	}
-
-	@EventHandler
-	public void onEntityDamage(EntityDamageEvent event) {
-		if (!(event.getEntity() instanceof Player)) {
-			return;
-		}
-
-		final Player player = (Player) event.getEntity();
-
-		getCheckVersion(player, CheckType.ANTIKNOCKBACK, "A").call(event);
 	}
 
 	@EventHandler
@@ -90,19 +81,17 @@ public class DetectionListener implements Listener {
 	}
 
 	@EventHandler
+	public void onPlayerVelocity(PlayerVelocityEvent event) {
+		final Player player = event.getPlayer();
+
+		getCheckVersion(player, CheckType.ANTIVELOCITY, "A").call(event);
+	}
+
+	@EventHandler
 	public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
 		final Player player = event.getPlayer();
 
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
-	}
-
-	@EventHandler
-	public void onPlayerJump(PlayerJumpEvent event) {
-		final Player player = event.getPlayer();
-
-		Bukkit.broadcastMessage("jumped");
-
-		getCheckVersion(player, CheckType.HIGHJUMP, "A").call(event);
 	}
 
 	private Profile getProfile(Player player) {

@@ -74,6 +74,10 @@ public class Crescent extends JavaPlugin {
 		this.getConfig().set("antiknockback.a.bowPunchI", 2);
 		this.getConfig().set("antiknockback.a.bowPunchII", 2);
 
+		this.getConfig().set("killaura.c.disallowedAngle", 120);
+
+		this.getConfig().set("reach.a.allowedReach", 4.75);
+
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 	}

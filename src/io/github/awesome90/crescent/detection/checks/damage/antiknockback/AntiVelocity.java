@@ -4,12 +4,12 @@ import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.info.Profile;
 
-public class Antiknockback extends Check {
+public class AntiVelocity extends Check {
 
-	public Antiknockback(Profile profile) {
-		super(profile, CheckType.ANTIKNOCKBACK);
+	public AntiVelocity(Profile profile) {
+		super(profile, CheckType.ANTIVELOCITY);
 
-		versions.add(new AntiknockbackA(this));
+		versions.add(new AntiVelocityA(this));
 	}
 
 }
