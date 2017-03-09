@@ -44,7 +44,7 @@ public class WaterWalkA extends CheckVersion {
 				final Material from = getMaterialDown(pme.getFrom());
 				final Material to = getMaterialDown(pme.getTo());
 
-				if (isWater(from) && isWater(to)) {
+				if (pme.getFrom().getBlockY() == pme.getTo().getBlockY() && isWater(from) && isWater(to)) {
 
 					// The player is standing on water.
 					if (startTime == -1) {
