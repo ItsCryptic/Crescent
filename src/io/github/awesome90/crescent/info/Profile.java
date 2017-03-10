@@ -46,11 +46,14 @@ public class Profile {
 
 	private final UUID uuid;
 	private final Behaviour behaviour;
+	// The time the player joined the server on their current session.
+	private final long joinTime;
 	private ArrayList<Check> checks;
 
 	public Profile(UUID uuid) {
 		this.uuid = uuid;
 		this.behaviour = new Behaviour(this);
+		this.joinTime = System.currentTimeMillis();
 		// Create an ArrayList containing all the checks. This should only be
 		// able to hold the maximum size of checks.
 		this.checks = new ArrayList<Check>(CheckType.values().length);
@@ -77,11 +80,17 @@ public class Profile {
 		checks.add(new Reach(this));
 	}
 
-	public UUID getUUID() {
+	/**
+	 * @return The UUID of the user.
+	 */
+	public final UUID getUUID() {
 		return uuid;
 	}
 
-	public Behaviour getBehaviour() {
+	/**
+	 * @return The Behaviour object of the user.
+	 */
+	public final Behaviour getBehaviour() {
 		return behaviour;
 	}
 
@@ -101,18 +110,34 @@ public class Profile {
 		return null;
 	}
 
+	/**
+	 * @return Whether the player is online (on the server) or not.
+	 */
 	public final boolean isOnline() {
 		return getPlayer() != null;
 	}
 
+	/**
+	 * @return The Player instance of the user.
+	 */
 	public final Player getPlayer() {
 		return Bukkit.getPlayer(uuid);
 	}
 
+	/**
+	 * @return The latency of the player to the server (in milliseconds).
+	 */
 	public final int getPing() {
 		final CraftPlayer cp = (CraftPlayer) getPlayer();
 		final EntityPlayer ep = (EntityPlayer) cp.getHandle();
 		return ep.ping;
+	}
+
+	/**
+	 * @return The time that the player has been online for (in milliseconds).
+	 */
+	public final long getOnlineTime() {
+		return System.currentTimeMillis() - joinTime;
 	}
 
 }

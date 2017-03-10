@@ -80,6 +80,8 @@ public class Crescent extends JavaPlugin {
 		this.getConfig().set("reach.a.allowedReachDifference", 0.25);
 		this.getConfig().set("reach.a.reachDataValidation", 25);
 
+		this.getConfig().set("inventorytweaks.b.bowlsPerSingleSlot", 50);
+
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 	}

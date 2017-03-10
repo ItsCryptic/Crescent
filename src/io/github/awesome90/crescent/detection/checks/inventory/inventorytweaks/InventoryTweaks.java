@@ -10,6 +10,7 @@ public class InventoryTweaks extends Check {
 		super(profile, CheckType.INVENTORYTWEAKS);
 
 		versions.add(new InventoryTweaksA(this));
+		versions.add(new InventoryTweaksB(this));
 	}
 
 }

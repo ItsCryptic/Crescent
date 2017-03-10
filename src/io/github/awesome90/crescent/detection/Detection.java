@@ -56,8 +56,8 @@ public class Detection {
 	}
 
 	/**
-	 * @return The time that the detection happened in Unix time * 1000 (time
-	 *         since January 1st 1970)
+	 * @return The time that the detection happened in Unix time * 1000 (time in
+	 *         seconds since January 1st 1970)
 	 */
 	public long getTime() {
 		return time;
