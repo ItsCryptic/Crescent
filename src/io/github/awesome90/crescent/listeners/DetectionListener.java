@@ -24,6 +24,8 @@ public class DetectionListener implements Listener {
 
 		getCheckVersion(player, CheckType.SPEED, "A").call(event);
 
+		getCheckVersion(player, CheckType.SPEED, "B").call(event);
+
 		getCheckVersion(player, CheckType.FLY, "A").call(event);
 
 		getCheckVersion(player, CheckType.WATERWALK, "A").call(event);
