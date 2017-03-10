@@ -2,7 +2,6 @@ package io.github.awesome90.crescent.detection.checks.damage.reach;
 
 import java.util.ArrayList;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -10,6 +9,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
+import io.github.awesome90.crescent.util.Helper;
 
 public class ReachA extends CheckVersion {
 
@@ -40,7 +40,8 @@ public class ReachA extends CheckVersion {
 
 			final Player player = profile.getPlayer();
 
-			final double reachSquared = getDistanceSquaredXZ(player.getLocation(), edbe.getEntity().getLocation());
+			final double reachSquared = Helper.getDistanceSquaredXZ(player.getLocation(),
+					edbe.getEntity().getLocation());
 
 			previousReach.add(reachSquared);
 
@@ -67,11 +68,6 @@ public class ReachA extends CheckVersion {
 	@Override
 	public double checkCurrentCertainty() {
 		return getStrangeReachPercentage();
-	}
-
-	private double getDistanceSquaredXZ(Location from, Location to) {
-		final double diffX = Math.abs(from.getX() - to.getX()), diffY = Math.abs(from.getY() - to.getY());
-		return diffX * diffX + diffY * diffY;
 	}
 
 	/**

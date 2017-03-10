@@ -10,7 +10,7 @@ import com.comphenix.protocol.ProtocolManager;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.listeners.DetectionListener;
 
-public class Crescent extends JavaPlugin {
+public final class Crescent extends JavaPlugin {
 
 	private static Crescent instance;
 

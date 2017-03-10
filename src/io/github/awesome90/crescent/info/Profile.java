@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;
+import io.github.awesome90.crescent.detection.checks.blocks.liquids.Liquids;
+import io.github.awesome90.crescent.detection.checks.damage.antidamage.AntiDamage;
 import io.github.awesome90.crescent.detection.checks.damage.antiknockback.AntiVelocity;
 import io.github.awesome90.crescent.detection.checks.damage.criticals.Criticals;
 import io.github.awesome90.crescent.detection.checks.damage.killaura.Killaura;
@@ -78,6 +80,8 @@ public class Profile {
 		checks.add(new Criticals(this));
 		checks.add(new Reach(this));
 		checks.add(new Packets(this));
+		checks.add(new Liquids(this));
+		checks.add(new AntiDamage(this));
 	}
 
 	/**

@@ -7,8 +7,9 @@ import io.github.awesome90.crescent.Crescent;
 public enum CheckType {
 	WATERWALK("WaterWalk", 10), NOFALL("NoFall", 10), ANTIVELOCITY("AntiVelocity", 10), SNEAK("Sneak", 10), FLY("Fly",
 			10), FASTBOW("Fastbow", 10), SPEED("Speed", 10), KILLAURA("Killaura", 10), FASTHEAL("FastHeal",
-					10), HIGHJUMP("HighJump", 10), CRITICALS("Criticals", 10), TIMER("Timer",
-							10), REACH("Reach", 10), INVENTORYTWEAKS("InventoryTweaks", 10), PACKETS("Blink", 10);
+					10), HIGHJUMP("HighJump", 10), CRITICALS("Criticals", 10), REACH("Reach", 10), INVENTORYTWEAKS(
+							"InventoryTweaks",
+							10), PACKETS("Packets", 10), LIQUIDS("Liquids", 10), ANTIDAMAGE("AntiDamage", 10);
 
 	private final String name;
 	private final int normalCheatConsider;

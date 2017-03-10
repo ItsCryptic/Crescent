@@ -3,7 +3,9 @@ package io.github.awesome90.crescent.listeners;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -29,8 +31,6 @@ public class DetectionListener implements Listener {
 		getCheckVersion(player, CheckType.NOFALL, "A").call(event);
 
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
-
-		getCheckVersion(player, CheckType.TIMER, "A").call(event);
 
 		getCheckVersion(player, CheckType.PACKETS, "A").call(event);
 	}
@@ -58,6 +58,17 @@ public class DetectionListener implements Listener {
 
 			getCheckVersion(player, CheckType.REACH, "A").call(event);
 		}
+	}
+
+	@EventHandler
+	public void onEntityDamage(EntityDamageEvent event) {
+		if (!(event.getEntity() instanceof Player)) {
+			return;
+		}
+
+		final Player player = (Player) event.getEntity();
+
+		getCheckVersion(player, CheckType.ANTIDAMAGE, "A").call(event);
 	}
 
 	@EventHandler
@@ -94,6 +105,13 @@ public class DetectionListener implements Listener {
 		final Player player = event.getPlayer();
 
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
+	}
+
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent event) {
+		final Player player = event.getPlayer();
+
+		getCheckVersion(player, CheckType.LIQUIDS, "A").call(event);
 	}
 
 	private Profile getProfile(Player player) {

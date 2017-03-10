@@ -28,16 +28,13 @@ public class AntiVelocityA extends CheckVersion {
 			final Vector velocity = pve.getVelocity().clone();
 
 			// Check a little later.
-			Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), new Runnable() {
+			Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), () -> {
+				final Vector expected = player.getLocation().toVector().subtract(original.toVector());
+				final double distance = expected.distanceSquared(velocity);
 
-				@Override
-				public void run() {
-					final Vector expected = player.getLocation().toVector().subtract(original.toVector());
-					final double distance = expected.distanceSquared(velocity);
+				Bukkit.broadcastMessage("taken distance: " + distance);
+			}, 2L);
 
-					Bukkit.broadcastMessage("taken distance: " + distance);
-				}
-			}, 20L);
 		}
 	}
 
