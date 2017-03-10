@@ -7,27 +7,12 @@ import io.github.awesome90.crescent.Crescent;
 public enum CheckType {
 	WATERWALK("WaterWalk", 10), NOFALL("NoFall", 10), ANTIVELOCITY("AntiVelocity", 10), SNEAK("Sneak", 10), FLY("Fly",
 			10), FASTBOW("Fastbow", 10), SPEED("Speed", 10), KILLAURA("Killaura", 10), FASTHEAL("FastHeal",
-					10), HIGHJUMP("HighJump", 10), CRITICALS("Criticals",
-							10), TIMER("Timer", 10), REACH("Reach", 10), INVENTORYTWEAKS("InventoryTweaks", 10);
+					10), HIGHJUMP("HighJump", 10), CRITICALS("Criticals", 10), TIMER("Timer",
+							10), REACH("Reach", 10), INVENTORYTWEAKS("InventoryTweaks", 10), PACKETS("Blink", 10);
 
-	/**
-	 * The user-friendly name of the check.
-	 */
 	private final String name;
-	/**
-	 * The suggested, default, value for cheatConsider;
-	 */
 	private final int normalCheatConsider;
-	/**
-	 * The number of checks that need to be set off for the player to fully be
-	 * considered cheating.
-	 */
 	private final int cheatConsider;
-
-	/**
-	 * Whether the player should be prevented from performing an action (e.g.
-	 * teleported back).
-	 */
 	private final boolean prevent;
 
 	private CheckType(String name, int normalCheatConsider) {
@@ -40,19 +25,33 @@ public enum CheckType {
 		this.prevent = fc.getBoolean(name + ".prevent");
 	}
 
-	public String getName() {
+	/**
+	 * @return The user-friendly name of the check.
+	 */
+	public final String getName() {
 		return name;
 	}
 
-	public int getNormalCheatConsider() {
+	/**
+	 * @return The suggested, default, value for cheatConsider;
+	 */
+	public final int getNormalCheatConsider() {
 		return normalCheatConsider;
 	}
 
-	public int getCheatConsider() {
+	/**
+	 * @return The number of checks that need to be set off for the player to
+	 *         fully be considered cheating.
+	 */
+	public final int getCheatConsider() {
 		return cheatConsider;
 	}
 
-	public boolean shouldPrevent() {
+	/**
+	 * @return Whether the player should be prevented from performing an action
+	 *         (e.g. teleported back).
+	 */
+	public final boolean shouldPrevent() {
 		return prevent;
 	}
 }

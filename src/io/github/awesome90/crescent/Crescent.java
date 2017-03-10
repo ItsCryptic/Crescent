@@ -33,6 +33,14 @@ public class Crescent extends JavaPlugin {
 		loadConfig();
 
 		registerListeners();
+
+		// this.getServer().getScheduler()
+		// .scheduleSyncRepeatingTask(this,
+		// () -> Bukkit.getOnlinePlayers().stream()
+		// .forEach(player -> Bukkit
+		// .broadcastMessage("" +
+		// Profile.getProfile(player.getUniqueId()).getPing())),
+		// 0L, 20L);
 	}
 
 	private void registerListeners() {
@@ -81,6 +89,8 @@ public class Crescent extends JavaPlugin {
 		this.getConfig().set("reach.a.reachDataValidation", 25);
 
 		this.getConfig().set("inventorytweaks.b.bowlsPerSingleSlot", 50);
+
+		this.getConfig().set("packets.a.maxPacketsPerTick", 1.1);
 
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();

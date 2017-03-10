@@ -31,6 +31,8 @@ public class DetectionListener implements Listener {
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
 
 		getCheckVersion(player, CheckType.TIMER, "A").call(event);
+
+		getCheckVersion(player, CheckType.PACKETS, "A").call(event);
 	}
 
 	@EventHandler
@@ -53,7 +55,7 @@ public class DetectionListener implements Listener {
 			getCheckVersion(player, CheckType.KILLAURA, "C").call(event);
 
 			getCheckVersion(player, CheckType.KILLAURA, "D").call(event);
-			
+
 			getCheckVersion(player, CheckType.REACH, "A").call(event);
 		}
 	}
