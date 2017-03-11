@@ -9,6 +9,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 
@@ -48,7 +49,11 @@ public class DetectionListener implements Listener {
 		if (event.getDamager() instanceof Player) {
 			final Player player = (Player) event.getDamager();
 
+			getCheckVersion(player, CheckType.REACH, "A").call(event);
+
 			getCheckVersion(player, CheckType.CRITICALS, "A").call(event);
+
+			getCheckVersion(player, CheckType.AUTOCLICKER, "Damage").call(event);
 
 			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
 
@@ -58,7 +63,7 @@ public class DetectionListener implements Listener {
 
 			getCheckVersion(player, CheckType.KILLAURA, "D").call(event);
 
-			getCheckVersion(player, CheckType.REACH, "A").call(event);
+			getCheckVersion(player, CheckType.KILLAURA, "Learn").call(event);
 		}
 	}
 
@@ -114,6 +119,13 @@ public class DetectionListener implements Listener {
 		final Player player = event.getPlayer();
 
 		getCheckVersion(player, CheckType.LIQUIDS, "A").call(event);
+	}
+
+	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		final Player player = event.getPlayer();
+
+		getCheckVersion(player, CheckType.AUTOCLICKER, "Interact").call(event);
 	}
 
 	private Profile getProfile(Player player) {

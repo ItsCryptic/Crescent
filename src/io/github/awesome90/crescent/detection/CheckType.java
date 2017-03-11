@@ -5,19 +5,23 @@ import org.bukkit.configuration.file.FileConfiguration;
 import io.github.awesome90.crescent.Crescent;
 
 public enum CheckType {
-	WATERWALK("WaterWalk", 10), NOFALL("NoFall", 10), ANTIVELOCITY("AntiVelocity", 10), SNEAK("Sneak", 10), FLY("Fly",
-			10), FASTBOW("Fastbow", 10), SPEED("Speed", 10), KILLAURA("Killaura", 10), FASTHEAL("FastHeal",
-					10), HIGHJUMP("HighJump", 10), CRITICALS("Criticals", 10), REACH("Reach", 10), INVENTORYTWEAKS(
-							"InventoryTweaks",
-							10), PACKETS("Packets", 10), LIQUIDS("Liquids", 10), ANTIDAMAGE("AntiDamage", 10);
+	WATERWALK("WaterWalk", false, 10), NOFALL("NoFall", false, 10), ANTIVELOCITY("AntiVelocity", false, 10), SNEAK(
+			"Sneak", false,
+			10), FLY("Fly", false, 10), FASTBOW("Fastbow", false, 10), SPEED("Speed", false, 10), KILLAURA("Killaura",
+					true, 10), FASTHEAL("FastHeal", false, 10), HIGHJUMP("HighJump", false, 10), CRITICALS("Criticals",
+							false, 10), REACH("Reach", false, 10), INVENTORYTWEAKS("InventoryTweaks", false,
+									10), PACKETS("Packets", false, 10), LIQUIDS("Liquids", false, 10), ANTIDAMAGE(
+											"AntiDamage", false, 10), AUTOCLICKER("Autoclicker", false, 10);
 
 	private final String name;
+	private final boolean canLearn;
 	private final int normalCheatConsider;
 	private final int cheatConsider;
 	private final boolean prevent;
 
-	private CheckType(String name, int normalCheatConsider) {
+	private CheckType(String name, boolean canLearn, int normalCheatConsider) {
 		this.name = name;
+		this.canLearn = canLearn;
 		this.normalCheatConsider = normalCheatConsider;
 
 		final FileConfiguration fc = Crescent.getInstance().getConfig();
@@ -31,6 +35,13 @@ public enum CheckType {
 	 */
 	public final String getName() {
 		return name;
+	}
+
+	/**
+	 * @return Whether the plugin can actually learn from this CheckType.
+	 */
+	public final boolean canLearn() {
+		return canLearn;
 	}
 
 	/**

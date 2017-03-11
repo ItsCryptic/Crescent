@@ -18,6 +18,7 @@ import io.github.awesome90.crescent.detection.checks.damage.killaura.Killaura;
 import io.github.awesome90.crescent.detection.checks.damage.nofall.NoFall;
 import io.github.awesome90.crescent.detection.checks.damage.reach.Reach;
 import io.github.awesome90.crescent.detection.checks.health.fastheal.FastHeal;
+import io.github.awesome90.crescent.detection.checks.interact.autoclicker.Autoclicker;
 import io.github.awesome90.crescent.detection.checks.interact.fastbow.Fastbow;
 import io.github.awesome90.crescent.detection.checks.movement.blink.Packets;
 import io.github.awesome90.crescent.detection.checks.movement.fly.Fly;
@@ -82,6 +83,7 @@ public class Profile {
 		checks.add(new Packets(this));
 		checks.add(new Liquids(this));
 		checks.add(new AntiDamage(this));
+		checks.add(new Autoclicker(this));
 	}
 
 	/**

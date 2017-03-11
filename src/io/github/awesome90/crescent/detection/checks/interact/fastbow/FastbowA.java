@@ -9,6 +9,9 @@ import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
 public class FastbowA extends CheckVersion {
 
+	private static final int ALLOWED_MINIMUM_DIFFERENCE = Crescent.getInstance().getConfig()
+			.getInt("fastbow.a.allowedMinimumDifference");
+
 	/**
 	 * The time that a player previously shot a bow.
 	 */
@@ -22,8 +25,7 @@ public class FastbowA extends CheckVersion {
 	public void call(Event event) {
 		if (event instanceof EntityShootBowEvent) {
 			if (lastTime != -1) {
-				if (System.currentTimeMillis() - lastTime < Crescent.getInstance().getConfig()
-						.getInt("fastbow.a.allowedMinimumDifference")) {
+				if (System.currentTimeMillis() - lastTime < ALLOWED_MINIMUM_DIFFERENCE) {
 					callback(true);
 				}
 			}

@@ -73,7 +73,7 @@ public class ReachA extends CheckVersion {
 	/**
 	 * @return The percentage of all hits which had a larger than allowed reach.
 	 */
-	private double getStrangeReachPercentage() {
+	public double getStrangeReachPercentage() {
 		double totalReach = 0.0;
 		double totalOffset = 0.0;
 
@@ -98,6 +98,22 @@ public class ReachA extends CheckVersion {
 		}
 
 		return (totalOffset / totalReach) * 100.0;
+	}
+
+	/**
+	 * @return The average squared reach of a player.
+	 */
+	public double getAverageSquaredReach() {
+		if (previousReach.size() == 0) {
+			return 0.0;
+		}
+
+		double totalReach = 0.0;
+		for (double reach : previousReach) {
+			totalReach += reach;
+		}
+
+		return totalReach / previousReach.size();
 	}
 
 }
