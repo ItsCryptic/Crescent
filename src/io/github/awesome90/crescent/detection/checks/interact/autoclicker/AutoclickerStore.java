@@ -1,8 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.interact.autoclicker;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-
 public class AutoclickerStore {
 
 	private int totalClicks, currentClicks;
@@ -26,11 +23,10 @@ public class AutoclickerStore {
 			currentStartTime = System.currentTimeMillis();
 		} else {
 			long difference = System.currentTimeMillis() - currentStartTime;
-			if (difference >= 5000) {
+			if (difference >= 2000) {
 
 				// Check every two seconds.
 				currentClickRate = (double) currentClicks / (difference / 1000.0);
-				Bukkit.broadcastMessage(ChatColor.GOLD + "cps: " + currentClickRate);
 				currentClicks = 0;
 				currentStartTime = System.currentTimeMillis();
 			}

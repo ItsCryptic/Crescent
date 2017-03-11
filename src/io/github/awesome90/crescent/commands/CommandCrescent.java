@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.info.Profile;
+import io.github.awesome90.crescent.learn.KnownCheating;
 
 public class CommandCrescent implements CommandExecutor {
 
@@ -20,7 +21,7 @@ public class CommandCrescent implements CommandExecutor {
 			if (args.length == 0) {
 				String[] message = { ChatColor.BLUE + "Crescent",
 						ChatColor.WHITE + "/crescent learn - Enable learning mode.", ChatColor.WHITE
-								+ "/crescent doescheat [player] [true/false] - Mark a player as a cheater or as a legitimate user so we can use their information to add to the database." };
+								+ "/crescent doescheat [player] [yes/no/undefined] - Mark a player as a cheater or as a legitimate user so we can use their information to add to the database. If you are not sure, use the undefined option." };
 				sender.sendMessage(message);
 				return true;
 			}
@@ -54,20 +55,27 @@ public class CommandCrescent implements CommandExecutor {
 				}
 
 				final String doesCheat = args[2];
+				final KnownCheating cheating;
 
-				final boolean cheatSet;
-
-				try {
-					cheatSet = Boolean.parseBoolean(doesCheat);
-				} catch (Exception e) {
-					sender.sendMessage(ChatColor.RED + "That is not a valid boolean value.");
+				switch (doesCheat.toLowerCase()) {
+				case "yes":
+					cheating = KnownCheating.YES;
+					break;
+				case "no":
+					cheating = KnownCheating.NO;
+					break;
+				case "undefined":
+					cheating = KnownCheating.UNDEFINED;
+					break;
+				default:
+					sender.sendMessage(ChatColor.RED + "That is not a valid option.");
 					return true;
 				}
 
-				Profile.getProfile(target.getUniqueId()).setKnownCheating(cheatSet);
+				Profile.getProfile(target.getUniqueId()).setKnownCheating(cheating);
 
-				sender.sendMessage(ChatColor.GREEN + "You have let the system know that " + target.getName() + " is a "
-						+ (cheatSet ? "cheater" : "legitimate user") + ".");
+				sender.sendMessage(ChatColor.GREEN + "You have let the system know that " + target.getName()
+						+ "'s cheating status is: " + cheating.toString() + ".");
 
 				return true;
 			}

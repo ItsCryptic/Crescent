@@ -6,13 +6,11 @@ public class Learn {
 
 	private final CheckType type;
 	private final LearnData data;
-	private final boolean cheating;
 	private final double value;
 
-	public Learn(CheckType type, boolean cheating, double value) {
+	public Learn(CheckType type, double value) {
 		this.type = type;
 		this.data = LearnData.getLearnData(type);
-		this.cheating = cheating;
 		this.value = value;
 	}
 
@@ -20,36 +18,24 @@ public class Learn {
 	 * @param learn
 	 *            The Learn object to store.
 	 */
-	public void storeData() {
-		data.storeNewData(this);
+	public void storeData(KnownCheating knownCheating) {
+		data.storeNewData(this, knownCheating);
 	}
 
 	/**
 	 * @return The percentage difference to other, previous, checks.
 	 */
 	public double compare() {
-		final double average = data.getCurrentAverage(cheating);
+		final double cheatingAverage = data.getCurrentAverage(KnownCheating.YES);
+		final double legitimateAverage = data.getCurrentAverage(KnownCheating.NO);
 
-		double difference = value - average;
+		double difference = Math.abs((value - cheatingAverage) - (value - legitimateAverage));
 
-		if (difference < 0) {
-			/*
-			 * Due to the fact that the higher the value, the more likely they
-			 * are to be cheating. If they are below the average (like in this
-			 * scenario, they are almost completely unlikely to be cheating).
-			 */
-			difference = 0.0;
-		}
-
-		return (difference / average) * 100.0;
+		return (difference / (cheatingAverage + legitimateAverage)) * 100.0;
 	}
 
 	public CheckType getType() {
 		return type;
-	}
-
-	public boolean isCheating() {
-		return cheating;
 	}
 
 	public double getValue() {

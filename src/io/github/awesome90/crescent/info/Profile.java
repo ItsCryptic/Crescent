@@ -26,6 +26,7 @@ import io.github.awesome90.crescent.detection.checks.movement.highjump.HighJump;
 import io.github.awesome90.crescent.detection.checks.movement.impossible.Impossible;
 import io.github.awesome90.crescent.detection.checks.movement.speed.Speed;
 import io.github.awesome90.crescent.detection.checks.movement.waterwalk.WaterWalk;
+import io.github.awesome90.crescent.learn.KnownCheating;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 
 public class Profile {
@@ -55,7 +56,7 @@ public class Profile {
 
 	// Whether a moderator has flagged this player as cheating so we can use the
 	// learning feature.
-	private Boolean knownCheating;
+	private KnownCheating knownCheating;
 
 	public Profile(UUID uuid) {
 		this.uuid = uuid;
@@ -64,6 +65,8 @@ public class Profile {
 		// Create an ArrayList containing all the checks. This should only be
 		// able to hold the maximum size of checks.
 		this.checks = new ArrayList<Check>(CheckType.values().length);
+
+		this.knownCheating = KnownCheating.UNDEFINED;
 
 		addChecks();
 	}
@@ -150,15 +153,11 @@ public class Profile {
 		return System.currentTimeMillis() - joinTime;
 	}
 
-	public final boolean hasKnownCheatingBeenSet() {
-		return knownCheating != null;
-	}
-
-	public final boolean isKnownCheating() {
+	public final KnownCheating getKnownCheating() {
 		return knownCheating;
 	}
 
-	public void setKnownCheating(boolean knownCheating) {
+	public void setKnownCheating(KnownCheating knownCheating) {
 		this.knownCheating = knownCheating;
 	}
 

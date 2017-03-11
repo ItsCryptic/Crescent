@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -28,7 +29,7 @@ public class LearnData {
 			}
 		}
 
-		if (learnData == null) {
+		if (data == null) {
 			data = new LearnData(type);
 			learnData.add(data);
 		}
@@ -45,7 +46,7 @@ public class LearnData {
 		this.type = type;
 	}
 
-	public void storeNewData(Learn learn) {
+	public void storeNewData(Learn learn, KnownCheating knownCheating) {
 		final FileConfiguration fc = getConfig();
 
 		// Generate a UUID for this check (its identifier).
@@ -60,12 +61,14 @@ public class LearnData {
 		// The path to put the data in the file.
 		final String path = uuid.toString() + ".";
 
+		final boolean cheating = knownCheating == KnownCheating.YES;
+
 		// Set the values.
 		fc.set(path + "type", type.getName().toLowerCase());
-		fc.set(path + "cheating", learn.isCheating());
+		fc.set(path + "cheating", cheating);
 		fc.set(path + "value", learn.getValue());
 
-		String cheatPath = getCheatPath(learn.isCheating());
+		String cheatPath = getCheatPath(knownCheating);
 
 		// Get general values.
 		final double currentAverage = fc.getDouble(cheatPath + "CurrentAverage");
@@ -82,14 +85,13 @@ public class LearnData {
 	}
 
 	/**
-	 * @param cheating
-	 *            Whether you want to return the values when the player is
-	 *            cheating, or when they are not cheating.
+	 * @param knownCheating
+	 *            The player's cheating status.
 	 * @return The path string needed for the corresponding cheating boolean
 	 *         value.
 	 */
-	private String getCheatPath(boolean cheating) {
-		return cheating ? "cheating" : "legitimate";
+	private String getCheatPath(KnownCheating knownCheating) {
+		return knownCheating == KnownCheating.YES ? "cheating" : "legitimate";
 	}
 
 	private YamlConfiguration getConfig() {
@@ -132,16 +134,16 @@ public class LearnData {
 		return false;
 	}
 
-	public double getCurrentAverage(boolean cheating) {
-		return getConfig().getDouble(getCheatPath(cheating) + "TotalAverage");
+	public double getCurrentAverage(KnownCheating knownCheating) {
+		return getConfig().getDouble(getCheatPath(knownCheating) + "TotalAverage");
 	}
 
 	public void setCurrentAverage(double average) {
 		getConfig().set("TotalAverage", average);
 	}
 
-	public long getTotalSamples(boolean cheating) {
-		return getConfig().getLong(getCheatPath(cheating) + "TotalSamples");
+	public long getTotalSamples(KnownCheating knownCheating) {
+		return getConfig().getLong(getCheatPath(knownCheating) + "TotalSamples");
 	}
 
 	public void setTotalSamples(long totalSamples) {
