@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
+import io.github.awesome90.crescent.commands.CommandCrescent;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.listeners.DetectionListener;
 
@@ -33,14 +34,11 @@ public final class Crescent extends JavaPlugin {
 		loadConfig();
 
 		registerListeners();
+		registerCommands();
+	}
 
-		// this.getServer().getScheduler()
-		// .scheduleSyncRepeatingTask(this,
-		// () -> Bukkit.getOnlinePlayers().stream()
-		// .forEach(player -> Bukkit
-		// .broadcastMessage("" +
-		// Profile.getProfile(player.getUniqueId()).getPing())),
-		// 0L, 20L);
+	private void registerCommands() {
+		getCommand("crescent").setExecutor(new CommandCrescent());
 	}
 
 	private void registerListeners() {
@@ -60,6 +58,8 @@ public final class Crescent extends JavaPlugin {
 			this.getConfig().set(name + ".cheatConsider", type.getNormalCheatConsider());
 			this.getConfig().set(name + ".prevent", true);
 		}
+
+		this.getConfig().set("learnMode", false);
 
 		// Fly check values.
 		this.getConfig().set("fly.a.ascendFlyCertain", 1500);

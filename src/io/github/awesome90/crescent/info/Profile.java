@@ -53,6 +53,10 @@ public class Profile {
 	private final long joinTime;
 	private ArrayList<Check> checks;
 
+	// Whether a moderator has flagged this player as cheating so we can use the
+	// learning feature.
+	private Boolean knownCheating;
+
 	public Profile(UUID uuid) {
 		this.uuid = uuid;
 		this.behaviour = new Behaviour(this);
@@ -144,6 +148,18 @@ public class Profile {
 	 */
 	public final long getOnlineTime() {
 		return System.currentTimeMillis() - joinTime;
+	}
+
+	public final boolean hasKnownCheatingBeenSet() {
+		return knownCheating != null;
+	}
+
+	public final boolean isKnownCheating() {
+		return knownCheating;
+	}
+
+	public void setKnownCheating(boolean knownCheating) {
+		this.knownCheating = knownCheating;
 	}
 
 }

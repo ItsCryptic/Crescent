@@ -5,11 +5,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 import io.github.awesome90.crescent.detection.checks.damage.reach.ReachA;
 import io.github.awesome90.crescent.detection.checks.interact.autoclicker.AutoclickerDamage;
+import io.github.awesome90.crescent.learn.Learn;
 import io.github.awesome90.crescent.util.Helper;
 
 public class KillauraLearn extends CheckVersion {
@@ -40,10 +42,14 @@ public class KillauraLearn extends CheckVersion {
 
 			final int ping = profile.getPing();
 
-			Bukkit.broadcastMessage(
-					"average reach: " + averageReach + ", cps: " + currentDamageCPS + ", ping: " + ping);
+			final double value = reachSquared * averageReach * ((ping + 100) / 100) * currentDamageCPS;
 
-			final double value = reachSquared * averageReach * ((profile.getPing() + 100) / 100) * currentDamageCPS;
+			final Learn learn = new Learn(type, profile.isKnownCheating(), value);
+
+			if (profile.hasKnownCheatingBeenSet() && Crescent.getInstance().getConfig().getBoolean("learnMode")) {
+				// Store the data if we can.
+				learn.storeData();
+			}
 
 			Bukkit.broadcastMessage("Calculated value: " + value);
 		}
