@@ -26,12 +26,29 @@ public class Learn {
 	 * @return The percentage difference to other, previous, checks.
 	 */
 	public double compare() {
-		final double cheatingAverage = data.getCurrentAverage(KnownCheating.YES);
-		final double legitimateAverage = data.getCurrentAverage(KnownCheating.NO);
+		double certainty = 0.0;
 
-		double difference = Math.abs((value - cheatingAverage) - (value - legitimateAverage));
+		final double cheatingLowRange = data.getCurrentHighRange(KnownCheating.YES);
+		final double cheatingAverage = data.getCurrentLowRange(KnownCheating.YES);
 
-		return (difference / (cheatingAverage + legitimateAverage)) * 100.0;
+		// The midpoint between the low range and mean of the cheating spectrum
+		// and.
+		final double midpoint = (cheatingLowRange + cheatingAverage) / 2.0;
+
+		certainty = (value / midpoint) * 100.0;
+
+		if (value > cheatingAverage) {
+			certainty *= 1.5;
+		} else if (value > cheatingLowRange) {
+			certainty *= 1.25;
+		}
+
+		// It can't be negatively sure!
+		if (certainty < 0.0) {
+			certainty = 0.0;
+		}
+
+		return certainty;
 	}
 
 	public CheckType getType() {

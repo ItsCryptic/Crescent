@@ -43,7 +43,11 @@ public class KillauraLearn extends CheckVersion {
 
 			final int ping = profile.getPing();
 
-			final double value = reachSquared * averageReach * ((ping + 100) / 100) * currentDamageCPS;
+			// Add one, as this can't be zero as it will mess up our
+			// calculations.
+			final double angle = Helper.getAngle(profile.getPlayer(), edbe.getEntity()) + 1;
+
+			final double value = reachSquared * averageReach * angle * ((ping + 100) / 100) * currentDamageCPS;
 
 			final Learn learn = new Learn(type, value);
 
@@ -53,7 +57,9 @@ public class KillauraLearn extends CheckVersion {
 				learn.storeData(profile.getKnownCheating());
 			}
 
-			Bukkit.broadcastMessage("Calculated value: " + value);
+			final double comparison = learn.compare();
+
+			Bukkit.broadcastMessage("comparison: " + comparison);
 		}
 	}
 

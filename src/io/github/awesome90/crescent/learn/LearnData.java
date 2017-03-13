@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -40,6 +41,11 @@ public class LearnData {
 	public static final File DIRECTORY = new File(
 			Crescent.getInstance().getDataFolder().getPath() + File.separator + "LearnStore");
 
+	// Init.
+	{
+		DIRECTORY.mkdirs();
+	}
+
 	private final CheckType type;
 
 	public LearnData(CheckType type) {
@@ -56,32 +62,31 @@ public class LearnData {
 			uuid = UUID.randomUUID();
 		}
 
-		fc.createSection(uuid.toString());
-
 		// The path to put the data in the file.
-		final String path = uuid.toString() + ".";
-
-		final boolean cheating = knownCheating == KnownCheating.YES;
-
-		// Set the values.
-		fc.set(path + "type", type.getName().toLowerCase());
-		fc.set(path + "cheating", cheating);
-		fc.set(path + "value", learn.getValue());
-
 		String cheatPath = getCheatPath(knownCheating);
 
 		// Get general values.
-		final double currentAverage = fc.getDouble(cheatPath + "CurrentAverage");
+		final double currentMean = fc.getDouble(cheatPath + "CurrentMean");
+		final double currentLowRange = fc.getDouble(cheatPath + "CurrentLowRange");
+		final double currentHighRange = fc.getDouble(cheatPath + "CurrentHighRange");
 		final long totalSamples = fc.getLong(cheatPath + "TotalSamples");
 
-		// Calculate the new average.
-		double updateAverage = (currentAverage + learn.getValue()) / totalSamples + 1;
+		if (currentLowRange == 0.0 || learn.getValue() < currentLowRange) {
+			fc.set(cheatPath + "CurrentLowRange", learn.getValue());
+		} else if (learn.getValue() > currentHighRange) {
+			fc.set(cheatPath + "CurrentHighRange", learn.getValue());
+		}
 
-		fc.set(cheatPath + "CurrentAverage", updateAverage);
+		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "average: " + currentMean + " total samples: " + totalSamples);
+
+		// Calculate the new average.
+		double updateMean = (currentMean + learn.getValue()) / 2.0;
+
+		fc.set(cheatPath + "CurrentMean", updateMean);
 		fc.set(cheatPath + "TotalSamples", totalSamples + 1);
 
 		// Save the file.
-		save();
+		save(fc);
 	}
 
 	/**
@@ -109,9 +114,9 @@ public class LearnData {
 		return storeTo;
 	}
 
-	private void save() {
+	private void save(FileConfiguration fc) {
 		try {
-			getConfig().save(getRecordFile());
+			fc.save(getRecordFile());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -126,7 +131,8 @@ public class LearnData {
 	 */
 	private boolean createIfNotExists(File file) {
 		try {
-			return file.createNewFile();
+			file.getParentFile().mkdirs();
+			file.createNewFile();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -134,20 +140,16 @@ public class LearnData {
 		return false;
 	}
 
-	public double getCurrentAverage(KnownCheating knownCheating) {
-		return getConfig().getDouble(getCheatPath(knownCheating) + "TotalAverage");
+	public double getMeanAverage(KnownCheating knownCheating) {
+		return getConfig().getDouble(getCheatPath(knownCheating) + "CurrentMean");
 	}
 
-	public void setCurrentAverage(double average) {
-		getConfig().set("TotalAverage", average);
+	public double getCurrentLowRange(KnownCheating knownCheating) {
+		return getConfig().getDouble(getCheatPath(knownCheating) + "CurrentLowRange");
 	}
 
-	public long getTotalSamples(KnownCheating knownCheating) {
-		return getConfig().getLong(getCheatPath(knownCheating) + "TotalSamples");
-	}
-
-	public void setTotalSamples(long totalSamples) {
-		getConfig().set("TotalAverage", totalSamples);
+	public double getCurrentHighRange(KnownCheating knownCheating) {
+		return getConfig().getDouble(getCheatPath(knownCheating) + "CurrentHighRange");
 	}
 
 	public CheckType getType() {
