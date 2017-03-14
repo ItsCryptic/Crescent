@@ -1,11 +1,9 @@
 package io.github.awesome90.crescent.detection.checks.damage.antiknockback;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerVelocityEvent;
-import org.bukkit.util.Vector;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
@@ -24,18 +22,39 @@ public class AntiVelocityA extends CheckVersion {
 
 			final Player player = pve.getPlayer();
 
-			final Location original = player.getLocation().clone();
-			final Vector velocity = pve.getVelocity().clone();
+			final double originalY = player.getLocation().getY();
 
-			// Check a little later.
-			Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), () -> {
-				final Vector expected = player.getLocation().toVector().subtract(original.toVector());
-				final double distance = expected.distanceSquared(velocity);
+			final double ticksToMove = Math.min((profile.getPing() * profile.getPing()) + 50.0, 300.0) / 20.0;
 
-				Bukkit.broadcastMessage("taken distance: " + distance);
-			}, 2L);
+			final double expectedYVel = pve.getVelocity().getY();
 
+			// If the player is supposed to move a bit, check if they actually
+			// do so!
+			if (expectedYVel > 0.1) {
+				// Check a little later.
+				new BukkitRunnable() {
+					int time = 0;
+
+					@Override
+					public void run() {
+						time++;
+
+						final double current = player.getLocation().getY() - originalY;
+						if (current > expectedYVel || expectedYVel - current < 0.20) {
+							cancel();
+							return;
+						}
+
+						if (time > ticksToMove) {
+							callback(true);
+						}
+					}
+				}.runTaskTimer(Crescent.getInstance(), 0L,
+						1L /* Check every tick */);
+
+			}
 		}
+
 	}
 
 	@Override

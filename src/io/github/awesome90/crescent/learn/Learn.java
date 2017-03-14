@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.learn;
 
+import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.CheckType;
 
 public class Learn {
@@ -19,7 +20,10 @@ public class Learn {
 	 *            The Learn object to store.
 	 */
 	public void storeData(KnownCheating knownCheating) {
-		data.storeNewData(this, knownCheating);
+		if (knownCheating != KnownCheating.UNDEFINED && Crescent.getInstance().getConfig().getBoolean("learnMode")) {
+			// Store the data if we can.
+			data.storeNewData(this, knownCheating);
+		}
 	}
 
 	/**

@@ -2,6 +2,7 @@ name: Crescent
 main: io.github.awesome90.crescent.Crescent
 version: 0.1
 author: Awesome90
+depend: [ProtocolLib]
 commands:
     crescent:
         description: The main command for the anticheat.

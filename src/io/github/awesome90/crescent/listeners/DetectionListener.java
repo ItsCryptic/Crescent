@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +13,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
+
+import com.comphenix.protocol.events.PacketEvent;
 
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
@@ -76,6 +79,11 @@ public class DetectionListener implements Listener {
 		final Player player = (Player) event.getEntity();
 
 		getCheckVersion(player, CheckType.ANTIDAMAGE, "A").call(event);
+	}
+
+	@EventHandler
+	public void onPacket(PacketEvent event) {
+		Bukkit.broadcastMessage("packet");
 	}
 
 	@EventHandler

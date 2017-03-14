@@ -1,6 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -51,15 +50,13 @@ public class KillauraLearn extends CheckVersion {
 
 			final Learn learn = new Learn(type, value);
 
-			if (profile.getKnownCheating() != KnownCheating.UNDEFINED
-					&& Crescent.getInstance().getConfig().getBoolean("learnMode")) {
-				// Store the data if we can.
-				learn.storeData(profile.getKnownCheating());
-			}
+			learn.storeData(profile.getKnownCheating());
 
 			final double comparison = learn.compare();
 
-			Bukkit.broadcastMessage("comparison: " + comparison);
+			if (comparison > 50.0) {
+				callback(true);
+			}
 		}
 	}
 
