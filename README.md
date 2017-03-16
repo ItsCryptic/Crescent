@@ -1,7 +1,5 @@
 ![Crescent Logo](/Logo.png?raw=true)
 
-# Crescent
-
 This plugin aims to eradicate cheating from servers by making cheating not significantly advantageous enough for players.
 
 Crescent is still under development but hopes to be ready for use soon.
