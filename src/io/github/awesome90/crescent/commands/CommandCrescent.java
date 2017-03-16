@@ -21,7 +21,7 @@ public class CommandCrescent implements CommandExecutor {
 			if (args.length == 0) {
 				String[] message = { ChatColor.BLUE + "Crescent",
 						ChatColor.WHITE + "/crescent learn - Enable learning mode.", ChatColor.WHITE
-								+ "/crescent doescheat [player] [yes/no/undefined] - Mark a player as a cheater or as a legitimate user so we can use their information to add to the database. If you are not sure, use the undefined option." };
+								+ "/crescent doescheat [player] [yes/no/undefined] - Mark a player as a cheater or as a legitimate user so we can use their information to add to the database. If you want to reset it, use the undefined option." };
 				sender.sendMessage(message);
 				return true;
 			}

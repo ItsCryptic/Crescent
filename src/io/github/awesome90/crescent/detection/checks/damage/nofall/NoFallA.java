@@ -63,7 +63,8 @@ public class NoFallA extends CheckVersion {
 
 				if (fallDistance < 4.0) {
 					/*
-					 * The player has not fallen enough distance to take fall damage.
+					 * The player has not fallen enough distance to take fall
+					 * damage.
 					 */
 					return;
 				}
@@ -95,8 +96,6 @@ public class NoFallA extends CheckVersion {
 						 */
 						lastY = -1.0;
 
-						Bukkit.broadcastMessage("expected: " + expected + ", actual: " + player.getHealth());
-
 						/*
 						 * Check a bit later if their health is higher than it
 						 * is expected to be.
@@ -105,6 +104,7 @@ public class NoFallA extends CheckVersion {
 
 							@Override
 							public void run() {
+								Bukkit.broadcastMessage("expected: " + expected + ", actual: " + player.getHealth());
 								if (player.getHealth() > expected) {
 									callback(true);
 								}
