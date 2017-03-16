@@ -33,8 +33,8 @@ public class WaterWalkA extends CheckVersion {
 			final Behaviour behaviour = profile.getBehaviour();
 			final GameMode mode = profile.getPlayer().getGameMode();
 
-			if ((mode != GameMode.CREATIVE && mode != GameMode.SPECTATOR) && behaviour.isOnLiquidBlock()
-					&& !behaviour.isInWater()) {
+			if ((mode != GameMode.CREATIVE && mode != GameMode.SPECTATOR) && !profile.getPlayer().isInsideVehicle()
+					&& behaviour.isOnLiquidBlock() && !behaviour.isInWater()) {
 				/*
 				 * Do not execute this statement if the player is not descending
 				 * (this could lead to false positives) and if the player is in
@@ -43,6 +43,10 @@ public class WaterWalkA extends CheckVersion {
 
 				final Material from = getMaterialDown(pme.getFrom());
 				final Material to = getMaterialDown(pme.getTo());
+
+				if (from == Material.WATER_LILY || to == Material.WATER_LILY) {
+					return;
+				}
 
 				if (pme.getFrom().getBlockY() == pme.getTo().getBlockY() && isWater(from) && isWater(to)) {
 

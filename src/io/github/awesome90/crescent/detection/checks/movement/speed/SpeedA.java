@@ -21,7 +21,7 @@ public class SpeedA extends CheckVersion {
 		if (event instanceof PlayerMoveEvent) {
 			final Player player = profile.getPlayer();
 
-			if (player.getGameMode() == GameMode.SPECTATOR) {
+			if (player.getGameMode() == GameMode.SPECTATOR || player.isInsideVehicle()) {
 				/*
 				 * If the player is in spectator mode, return out of the method
 				 * as the speed function in this game mode could cause false

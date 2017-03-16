@@ -1,4 +1,4 @@
-package io.github.awesome90.crescent.detection.checks.damage.antiknockback;
+package io.github.awesome90.crescent.detection.checks.movement.antivelocity;
 
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;

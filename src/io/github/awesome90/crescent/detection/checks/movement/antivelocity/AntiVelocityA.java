@@ -1,4 +1,4 @@
-package io.github.awesome90.crescent.detection.checks.damage.antiknockback;
+package io.github.awesome90.crescent.detection.checks.movement.antivelocity;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -47,6 +47,8 @@ public class AntiVelocityA extends CheckVersion {
 
 						if (time > ticksToMove) {
 							callback(true);
+							cancel();
+							return;
 						}
 					}
 				}.runTaskTimer(Crescent.getInstance(), 0L,
