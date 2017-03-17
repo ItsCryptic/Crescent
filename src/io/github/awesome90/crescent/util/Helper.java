@@ -20,7 +20,7 @@ public class Helper {
 		// direction.
 		change.setDirection(target.subtract(start));
 
-		return Math.abs(change.getYaw() - from.getYaw());
+		return Math.abs(change.getYaw() - from.getYaw()) % 180;
 	}
 
 }

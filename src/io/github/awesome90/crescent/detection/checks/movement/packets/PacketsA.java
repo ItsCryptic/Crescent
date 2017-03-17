@@ -48,10 +48,10 @@ public class PacketsA extends CheckVersion {
 						final double certaintyPercentage = ((movementsPerTick / (profile.getPing() + 1)) * 100.0) / 2.0;
 
 						/*
-						 * If we're over 25% sure, it's likely that the player
+						 * If we're over 100% sure, it's likely that the player
 						 * is cheating.
 						 */
-						if (certaintyPercentage > 25.0) {
+						if (certaintyPercentage > 100.0) {
 							callback(true);
 						}
 

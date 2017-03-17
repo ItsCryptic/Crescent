@@ -14,6 +14,8 @@ import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
 public class WaterWalkA extends CheckVersion {
 
+	private static final int WALK_TIME = Crescent.getInstance().getConfig().getInt("waterwalk.a.walkTime");
+
 	/**
 	 * The time that the player has been standing on water since.
 	 */
@@ -55,8 +57,7 @@ public class WaterWalkA extends CheckVersion {
 						startTime = System.currentTimeMillis();
 					}
 
-					if (System.currentTimeMillis() - startTime > Crescent.getInstance().getConfig()
-							.getInt("waterwalk.a.walkTime")) {
+					if (System.currentTimeMillis() - startTime > WALK_TIME) {
 						callback(true);
 						startTime = -1;
 						return;
