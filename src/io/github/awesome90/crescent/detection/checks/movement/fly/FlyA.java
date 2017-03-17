@@ -21,6 +21,14 @@ public class FlyA extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
+		if (profile.getBehaviour().getPotionEffectLevel(PotionEffectType.SPEED) > 2) {
+			/*
+			 * Potion effects above this level cause false positives. They're
+			 * not available without the /effect command anyway.
+			 */
+			return;
+		}
+
 		if (event instanceof PlayerMoveEvent) {
 
 			final Player player = profile.getPlayer();

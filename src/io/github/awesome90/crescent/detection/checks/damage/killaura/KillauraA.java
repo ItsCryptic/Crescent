@@ -18,7 +18,7 @@ public class KillauraA extends CheckVersion {
 	private long lastRecord;
 
 	public KillauraA(Check check) {
-		super(check, "A", "This checks the frequency of attacks that a player is making.");
+		super(check, "A", "Checks the order");
 		this.hits = lastRecord = 0;
 	}
 

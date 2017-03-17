@@ -46,15 +46,25 @@ public class SpeedA extends CheckVersion {
 			final Vector from = pme.getFrom().toVector().clone().setY(0.0),
 					to = pme.getTo().toVector().clone().setY(0.0);
 
-			double speed = to.distanceSquared(from);
+			double distance = to.distanceSquared(from);
 
 			if (speedLevel > 0) {
 				// Take into account speed potions.
-				speed -= (speed / 100.0) * (speedLevel * 20.0);
+				distance -= (distance / 100.0) * (speedLevel * 20.0);
 			}
 
-			if (speed > 0.40) {
-				callback(true);
+			/*
+			 * Walking and flying (but not sprinting): 0.40, Sprinting and
+			 * flying: 1.20
+			 */
+			if (player.isFlying() && player.isSprinting()) {
+				if (distance > 1.20) {
+					callback(true);
+				}
+			} else {
+				if (distance > 0.40) {
+					callback(true);
+				}
 			}
 		}
 	}
