@@ -31,8 +31,8 @@ public class Detection {
 
 	public void alert() {
 		final String message = ChatColor.RED + profile.getPlayer().getName() + " failed the "
-				+ check.getType().getName().toLowerCase() + checkVersion + " check. (" + check.getCertainty()
-				+ "% ping: " + profile.getPing() + ")";
+				+ check.getType().getName().toLowerCase() + checkVersion + " check. (certainty: " + check.getCertainty()
+				+ "%, ping: " + profile.getPing() + ")";
 
 		// Yay! We get to use Java 8 streams! :D
 		Bukkit.getOnlinePlayers().stream().filter(player -> player.isOp())

@@ -52,46 +52,6 @@ public final class Crescent extends JavaPlugin {
 	 * Set the configuration defaults.
 	 */
 	private void loadConfig() {
-
-		for (CheckType type : CheckType.values()) {
-			final String name = type.getName().toLowerCase();
-			this.getConfig().set(name + ".cheatConsider", type.getNormalCheatConsider());
-			this.getConfig().set(name + ".prevent", true);
-		}
-
-		this.getConfig().set("learnMode", false);
-
-		// Fly check values.
-		this.getConfig().set("fly.a.ascendFlyCertain", 1500);
-		this.getConfig().set("fly.b.countInAir", 20);
-		this.getConfig().set("fly.b.flyCertain", 1500);
-
-		this.getConfig().set("waterwalk.a.walkTime", 1000);
-
-		this.getConfig().set("fastbow.a.allowedMinimumDifference", 250);
-
-		// Antiknockback check A default values.
-		this.getConfig().set("antiknockback.a.nonSprintNormal", "2.1-3.1");
-		this.getConfig().set("antiknockback.a.sprintNormal", "4.9-6.8");
-		this.getConfig().set("antiknockback.a.nonSprintKnockbackI", "4.9-6.8");
-		this.getConfig().set("antiknockback.a.nonSprintKnockbackII", "5.0-11.0");
-		this.getConfig().set("antiknockback.a.sprintKnockbackI", "5.0-11.0");
-		this.getConfig().set("antiknockback.a.sprintKnockbackII", "9.5-15.0");
-
-		this.getConfig().set("antiknockback.a.bow", 2);
-		this.getConfig().set("antiknockback.a.bowPunchI", 2);
-		this.getConfig().set("antiknockback.a.bowPunchII", 2);
-
-		this.getConfig().set("killaura.c.disallowedAngle", 120);
-
-		this.getConfig().set("reach.a.allowedReach", 4.75);
-		this.getConfig().set("reach.a.allowedReachDifference", 0.25);
-		this.getConfig().set("reach.a.reachDataValidation", 25);
-
-		this.getConfig().set("inventorytweaks.b.bowlsPerSingleSlot", 50);
-
-		this.getConfig().set("packets.a.maxPacketsPerTick", 1.1);
-
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 	}

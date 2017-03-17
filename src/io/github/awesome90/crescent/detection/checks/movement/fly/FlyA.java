@@ -1,19 +1,22 @@
 package io.github.awesome90.crescent.detection.checks.movement.fly;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
 public class FlyA extends CheckVersion {
 
+	private long startTime;
+
 	public FlyA(Check check) {
 		super(check, "A", "Checks if the player has been ascending for a large amount of time.");
+		this.startTime = -1;
 	}
 
 	@Override
@@ -25,7 +28,7 @@ public class FlyA extends CheckVersion {
 			if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR
 					&& !player.getAllowFlight()) {
 				final PlayerMoveEvent pme = (PlayerMoveEvent) event;
-				
+
 				final double distanceSquared = pme.getTo().toVector().distanceSquared(pme.getFrom().toVector());
 
 				/*
@@ -37,18 +40,42 @@ public class FlyA extends CheckVersion {
 				 */
 				if (!profile.getBehaviour().isOnGround()
 						&& profile.getBehaviour().getBlockAbovePlayer().getType() == Material.AIR
-						&& player.getFallDistance() == 0.0) {
+						&& player.getFallDistance() <= 0.0) {
+
+					if (startTime == -1) {
+						startTime = System.currentTimeMillis();
+						return;
+					}
 
 					/*
-					 * I roughly measured jumping as 0.15 as a vector squared
+					 * Rough values for what this should be. Normal: 350, Jump
+					 * Boost I: 250, Jump Boost II: Same as Normal.
+					 */
+					final long timeInAir = System.currentTimeMillis() - startTime;
+
+					int allowed = 0;
+
+					final int jumpBoostLevel = profile.getBehaviour().getPotionEffectLevel(PotionEffectType.JUMP);
+
+					if (jumpBoostLevel == 0 || jumpBoostLevel == 2) {
+						allowed = 350;
+					} else if (jumpBoostLevel == 1) {
+						allowed = 250;
+					} else {
+						return;
+					}
+
+					/*
+					 * I roughly measured jumping as 0.25 as a vector squared
 					 * between the to and from points.
 					 * 
-					 * Here, 0.25 is being used to avoid false positives.
+					 * Here, 0.35 is being used to avoid false positives.
 					 */
-					if (distanceSquared > 0.25) {
+					if (distanceSquared > 0.35 && timeInAir > allowed) {
 						callback(true);
-						Bukkit.broadcastMessage("distance: " + distanceSquared);
 					}
+				} else {
+					startTime = System.currentTimeMillis();
 				}
 
 			}

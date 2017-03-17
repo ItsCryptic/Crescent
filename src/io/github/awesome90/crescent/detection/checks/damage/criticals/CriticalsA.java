@@ -31,15 +31,15 @@ public class CriticalsA extends CheckVersion {
 	private boolean canDealCritical() {
 		final Player player = profile.getPlayer();
 		final Behaviour behaviour = profile.getBehaviour();
-		return profile.getBehaviour().getBlockUnderPlayer().getType().isSolid() && player.getFallDistance() > 0.0
-				&& !behaviour.isOnGround() && !behaviour.isOnLadder() && !behaviour.isOnVine() && !behaviour.isInWater()
+		return player.getFallDistance() > 0.0 && !behaviour.isOnGround() && !behaviour.isOnLadder()
+				&& !behaviour.isOnVine() && !behaviour.isInWater()
 				&& !player.hasPotionEffect(PotionEffectType.BLINDNESS) && !player.isInsideVehicle()
 				&& !player.isSprinting();
 	}
 
 	private boolean isInvalidCritical() {
 		final double y = profile.getPlayer().getLocation().getY();
-		return y % 1.9 == 0.0 || y % 0.5 == 1.0;
+		return profile.getBehaviour().getBlockUnderPlayer().getType().isSolid() && (y % 1.9 == 0.0 || y % 0.5 == 1.0);
 	}
 
 	@Override

@@ -1,0 +1,82 @@
+# Crescent Configuration File
+# Repository: https://github.com/awesome90/Crescent
+# Support: Message me on the Spigot forums at https://www.spigotmc.org/members/awesome90.284558/
+
+# Checks:
+# - Most checks have a cheatConsider variable. This is the amount of positive results that Crescent has to record to be fully sure that the player is hacking.
+# - Most checks also have a prevent boolean. This can be either true or false. If set to true, Crescent will attempt to stop the player from hacking
+#   (e.g. teleport them back). Checks that do not have this cannot be prevented.
+
+# Don't change these values from the default unless you know what you're doing!
+
+# Whether Crescent should take into account actions and record them to use for future checks.
+learnMode: false
+waterwalk:
+  cheatConsider: 10
+  prevent: true
+  a:
+    walkTime: 1000
+nofall:
+  cheatConsider: 10
+  prevent: true
+antivelocity:
+  cheatConsider: 10
+  prevent: true
+sneak:
+  cheatConsider: 10
+fly:
+  cheatConsider: 10
+  prevent: true
+  a:
+    ascendFlyCertain: 1500
+  b:
+    countInAir: 20
+    flyCertain: 1500
+fastbow:
+  cheatConsider: 10
+  prevent: true
+  a:
+    allowedMinimumDifference: 250
+speed:
+  cheatConsider: 10
+  prevent: true
+killaura:
+  cheatConsider: 10
+  prevent: true
+  c:
+    disallowedAngle: 120
+fastheal:
+  cheatConsider: 10
+  prevent: true
+highjump:
+  cheatConsider: 10
+  prevent: true
+criticals:
+  cheatConsider: 10
+  prevent: true
+reach:
+  cheatConsider: 10
+  prevent: true
+  a:
+    allowedReach: 4.75
+    allowedReachDifference: 0.25
+    reachDataValidation: 25
+inventorytweaks:
+  cheatConsider: 10
+  prevent: true
+  b:
+    bowlsPerSingleSlot: 50
+packets:
+  cheatConsider: 10
+  prevent: true
+  a:
+    maxPacketsPerTick: 1.1
+liquids:
+  cheatConsider: 10
+  prevent: true
+antidamage:
+  cheatConsider: 10
+  prevent: true
+autoclicker:
+  cheatConsider: 10
+  prevent: true

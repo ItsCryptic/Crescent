@@ -20,10 +20,10 @@ import io.github.awesome90.crescent.detection.checks.health.fastheal.FastHeal;
 import io.github.awesome90.crescent.detection.checks.interact.autoclicker.Autoclicker;
 import io.github.awesome90.crescent.detection.checks.interact.fastbow.Fastbow;
 import io.github.awesome90.crescent.detection.checks.movement.antivelocity.AntiVelocity;
-import io.github.awesome90.crescent.detection.checks.movement.blink.Packets;
 import io.github.awesome90.crescent.detection.checks.movement.fly.Fly;
 import io.github.awesome90.crescent.detection.checks.movement.highjump.HighJump;
 import io.github.awesome90.crescent.detection.checks.movement.impossible.Impossible;
+import io.github.awesome90.crescent.detection.checks.movement.packets.Packets;
 import io.github.awesome90.crescent.detection.checks.movement.speed.Speed;
 import io.github.awesome90.crescent.detection.checks.movement.waterwalk.WaterWalk;
 import io.github.awesome90.crescent.learn.KnownCheating;
@@ -46,6 +46,7 @@ public class Profile {
 		profiles.add(profile);
 
 		return profile;
+
 	}
 
 	private final UUID uuid;

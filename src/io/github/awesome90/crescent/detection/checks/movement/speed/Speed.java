@@ -10,7 +10,6 @@ public class Speed extends Check {
 		super(profile, CheckType.SPEED);
 
 		versions.add(new SpeedA(this));
-		versions.add(new SpeedB(this));
 	}
 
 }

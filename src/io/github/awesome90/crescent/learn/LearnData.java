@@ -152,6 +152,10 @@ public class LearnData {
 		return getConfig().getDouble(getCheatPath(knownCheating) + "CurrentHighRange");
 	}
 
+	public int getTotalSamples() {
+		return getConfig().getInt("TotalSamples");
+	}
+
 	public CheckType getType() {
 		return type;
 	}

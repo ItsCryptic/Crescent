@@ -27,12 +27,7 @@ public class HighJumpA extends CheckVersion {
 		//
 		// int jumpLevel = 0;
 		//
-		// for (PotionEffect effect : player.getActivePotionEffects()) {
-		// if (effect.equals(PotionEffectType.JUMP)) {
-		// jumpLevel = effect.getAmplifier();
-		// break;
-		// }
-		// }
+		// 
 		//
 		// double allowedExtra = 0.0;
 		//

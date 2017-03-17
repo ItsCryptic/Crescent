@@ -42,7 +42,8 @@ public class KillauraLearn extends CheckVersion {
 
 			// Add one, as this can't be zero as it will mess up our
 			// calculations.
-			final double angle = Helper.getAngle(profile.getPlayer(), edbe.getEntity()) + 1;
+			final double angle = Helper.getAngle(profile.getPlayer().getEyeLocation(), edbe.getEntity().getLocation())
+					+ 1;
 
 			final double value = reachSquared * averageReach * angle * ((ping + 100) / 100) * currentDamageCPS;
 

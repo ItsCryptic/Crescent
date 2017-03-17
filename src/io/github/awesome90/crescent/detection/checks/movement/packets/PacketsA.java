@@ -1,4 +1,4 @@
-package io.github.awesome90.crescent.detection.checks.movement.blink;
+package io.github.awesome90.crescent.detection.checks.movement.packets;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
