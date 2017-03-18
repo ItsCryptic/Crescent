@@ -2,7 +2,6 @@ package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -11,7 +10,6 @@ import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 import io.github.awesome90.crescent.util.Helper;
-import net.minecraft.server.v1_8_R3.AxisAlignedBB;
 
 public class KillauraC extends CheckVersion {
 
@@ -32,15 +30,15 @@ public class KillauraC extends CheckVersion {
 
 				final Location eye = profile.getPlayer().getEyeLocation();
 
-				final double angle = Helper.getAngle(eye, le.getLocation());
+				final double yawBetween = Helper.getYawBetween(eye, le.getLocation());
+				final double playerYaw = profile.getPlayer().getEyeLocation().getYaw();
 
-				Bukkit.broadcastMessage("KillauraC angle: " + angle);
+				final double difference = Math.abs((360.0 - Math.abs(yawBetween)) - (360.0 - Math.abs(playerYaw)));
 
-				if (angle >= DISALLOWED_ANGLE) {
-					final AxisAlignedBB axis = ((CraftEntity) le).getHandle().getBoundingBox();
+				Bukkit.broadcastMessage(
+						"KillauraC yaw: " + yawBetween + " player yaw: " + playerYaw + " difference: " + difference);
 
-					final double widthOfAttacked = axis.d - axis.a;
-
+				if (yawBetween >= DISALLOWED_ANGLE) {
 					callback(true);
 				}
 			}

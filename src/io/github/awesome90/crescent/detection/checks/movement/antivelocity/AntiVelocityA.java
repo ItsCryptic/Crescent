@@ -6,6 +6,7 @@ import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import io.github.awesome90.crescent.Crescent;
+import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
@@ -17,6 +18,15 @@ public class AntiVelocityA extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
+		final Behaviour behaviour = profile.getBehaviour();
+		/*
+		 * Thanks Eyremba for identifying these sources of false positives :D
+		 * (https://github.com/Eyremba).
+		 */
+		if (behaviour.isOnLadder() || behaviour.isInWeb()) {
+			return;
+		}
+
 		if (event instanceof PlayerVelocityEvent) {
 			final PlayerVelocityEvent pve = (PlayerVelocityEvent) event;
 

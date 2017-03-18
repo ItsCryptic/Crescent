@@ -18,13 +18,18 @@ public class SpeedA extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
+		// Causes false positives.
+		if (profile.getBehaviour().isDescending()) {
+			return;
+		}
+
 		if (event instanceof PlayerMoveEvent) {
 			final Player player = profile.getPlayer();
 
 			if (player.getGameMode() == GameMode.SPECTATOR || player.isInsideVehicle()) {
 				/*
 				 * If the player is in spectator mode, return out of the method
-				 * as the speed function in this game mode could cause false
+				 * as the speed function in this GameMode could cause false
 				 * positives.
 				 */
 				return;
@@ -55,10 +60,10 @@ public class SpeedA extends CheckVersion {
 
 			/*
 			 * Walking and flying (but not sprinting): 0.40, Sprinting and
-			 * flying: 1.20
+			 * flying: 1.25
 			 */
 			if (player.isFlying() && player.isSprinting()) {
-				if (distance > 1.20) {
+				if (distance > 1.25) {
 					callback(true);
 				}
 			} else {

@@ -73,6 +73,10 @@ public class Behaviour {
 		return 0;
 	}
 
+	public final boolean isDescending() {
+		return getPlayer().getVelocity().getY() < 0.0;
+	}
+
 	public final double getEPF(int level, double typeModifier) {
 		return Math.floor((6 + level * level) * typeModifier / 3);
 	}

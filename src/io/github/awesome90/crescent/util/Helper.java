@@ -10,17 +10,17 @@ public class Helper {
 		return diffX * diffX + diffY * diffY;
 	}
 
-	public static double getAngle(Location from, Location to) {
+	public static double getYawBetween(Location from, Location to) {
 		final Location change = from.clone();
 
 		final Vector start = change.toVector();
 		final Vector target = to.toVector();
 
 		// Get the difference between the two locations and set this as the
-		// direction.
+		// direction (the direct line from location to location).
 		change.setDirection(target.subtract(start));
 
-		return Math.abs(change.getYaw() - from.getYaw()) % 180;
+		return change.getYaw();
 	}
 
 }
