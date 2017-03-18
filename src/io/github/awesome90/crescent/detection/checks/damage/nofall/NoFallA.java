@@ -30,16 +30,10 @@ public class NoFallA extends CheckVersion {
 	 */
 	private double totalDisplacedHealth;
 
-	/**
-	 * The y coordinate the player was last at before they started falling.
-	 */
-	private double lastY;
-
 	public NoFallA(Check check) {
 		super(check, "A", "Checks the damage that the player took compared to the damage that they should have taken.");
 		this.totalDamage = totalDisplacedHealth = 0.0;
 		this.totalDisplacedHealth = 0.0;
-		this.lastY = -1.0;
 	}
 
 	@Override
@@ -54,12 +48,7 @@ public class NoFallA extends CheckVersion {
 				final Material from = pme.getFrom().getBlock().getRelative(BlockFace.DOWN).getType();
 				final Material to = pme.getTo().getBlock().getRelative(BlockFace.DOWN).getType();
 
-				if (to == Material.AIR) {
-					lastY = player.getLocation().getY();
-					return;
-				}
-
-				float fallDistance = player.getFallDistance();
+				final double fallDistance = profile.getBehaviour().getFallDistance();
 
 				if (fallDistance < 4.0) {
 					/*
@@ -91,34 +80,18 @@ public class NoFallA extends CheckVersion {
 										player.getMaxHealth()), 0.0);
 
 						/*
-						 * Reset the lastY value. The player is now on the
-						 * ground.
-						 */
-						lastY = -1.0;
-
-						/*
 						 * Check a bit later if their health is higher than it
 						 * is expected to be.
 						 */
-						Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), new Runnable() {
-
-							@Override
-							public void run() {
-								Bukkit.broadcastMessage("expected: " + expected + ", actual: " + player.getHealth());
-								if (player.getHealth() > expected) {
-									callback(true);
-								}
+						Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), () -> {
+							Bukkit.broadcastMessage("expected: " + expected + ", actual: " + player.getHealth());
+							if (player.getHealth() > expected) {
+								callback(true);
 							}
-						}, 2L);
+						}, 5L);
 
 					}
 				}
-			} else {
-				/*
-				 * If the player is not in survival or adventure mode, reset
-				 * their lastY value as it could be inaccurate.
-				 */
-				lastY = -1.0;
 			}
 		}
 	}
@@ -135,7 +108,7 @@ public class NoFallA extends CheckVersion {
 	 *            The distance the player has fallen.
 	 * @return How much their armour EPF reduces their fall damage.
 	 */
-	private double getExpectedDamage(Profile profile, float fallDistance) {
+	private double getExpectedDamage(Profile profile, double fallDistance) {
 		final Player player = profile.getPlayer();
 
 		/*
@@ -152,7 +125,8 @@ public class NoFallA extends CheckVersion {
 		 * Take the smallest out of the calculated and the player's maximum
 		 * health.
 		 */
-		double damage = Math.min(Math.ceil(Math.max(lastY - player.getLocation().getY(), fallDistance)) - 2,
+		double damage = Math.min(
+				Math.ceil(Math.max(profile.getBehaviour().getLastY() - player.getLocation().getY(), fallDistance)) - 2,
 				profile.getPlayer().getMaxHealth());
 
 		// Check to see if the player has feather falling.

@@ -8,7 +8,7 @@ import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 import io.github.awesome90.crescent.detection.checks.damage.reach.ReachA;
-import io.github.awesome90.crescent.detection.checks.interact.autoclicker.AutoclickerDamage;
+import io.github.awesome90.crescent.detection.checks.interact.autoclicker.AutoclickerA;
 import io.github.awesome90.crescent.learn.Learn;
 import io.github.awesome90.crescent.util.Helper;
 
@@ -33,7 +33,7 @@ public class KillauraLearn extends CheckVersion {
 
 			final double averageReach = reach.getAverageSquaredReach();
 
-			final AutoclickerDamage autoclicker = (AutoclickerDamage) profile.getCheck(CheckType.AUTOCLICKER)
+			final AutoclickerA autoclicker = (AutoclickerA) profile.getCheck(CheckType.AUTOCLICKER)
 					.getCheckVersion("Damage");
 
 			final double currentDamageCPS = autoclicker.getStore().getCurrentClickRate();

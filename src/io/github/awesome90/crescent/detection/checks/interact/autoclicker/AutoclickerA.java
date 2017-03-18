@@ -7,13 +7,12 @@ import org.bukkit.event.player.PlayerAnimationType;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
-public class AutoclickerInteract extends CheckVersion {
+public class AutoclickerA extends CheckVersion {
 
 	private AutoclickerStore store;
 
-	public AutoclickerInteract(Check check) {
-		super(check, "Interact",
-				"Calculates CPS from data collected from interacting with blocks (such as trapdoors).");
+	public AutoclickerA(Check check) {
+		super(check, "A", "Calculates CPS from data collected from the player swinging their arm.");
 		this.store = new AutoclickerStore();
 	}
 
@@ -23,10 +22,6 @@ public class AutoclickerInteract extends CheckVersion {
 			final PlayerAnimationEvent pae = (PlayerAnimationEvent) event;
 
 			if (pae.getAnimationType() == PlayerAnimationType.ARM_SWING) {
-				if (pae.isCancelled()) {
-					return;
-				}
-
 				store.call();
 			}
 		}

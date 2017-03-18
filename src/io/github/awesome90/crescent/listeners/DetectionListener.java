@@ -51,8 +51,6 @@ public class DetectionListener implements Listener {
 
 			getCheckVersion(player, CheckType.CRITICALS, "A").call(event);
 
-			getCheckVersion(player, CheckType.AUTOCLICKER, "Damage").call(event);
-
 			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
 
 			getCheckVersion(player, CheckType.KILLAURA, "B").call(event);
@@ -121,7 +119,7 @@ public class DetectionListener implements Listener {
 	public void onPlayerInteract(PlayerAnimationEvent event) {
 		final Player player = event.getPlayer();
 
-		getCheckVersion(player, CheckType.AUTOCLICKER, "Interact").call(event);
+		getCheckVersion(player, CheckType.AUTOCLICKER, "A").call(event);
 	}
 
 	private Profile getProfile(Player player) {

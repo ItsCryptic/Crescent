@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.detection.checks.damage.criticals;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -18,7 +19,8 @@ public class CriticalsA extends CheckVersion {
 	@Override
 	public void call(Event event) {
 		if (event instanceof EntityDamageByEntityEvent) {
-			if (!canDealCritical() && isInvalidCritical()) {
+			Bukkit.broadcastMessage("is critical: " + isCritical() + ", valid: " + isValidCritical());
+			if (isCritical() && !isValidCritical()) {
 				// This is not a valid critical hit.
 				callback(true);
 			}
@@ -26,20 +28,20 @@ public class CriticalsA extends CheckVersion {
 	}
 
 	/**
-	 * @return Whether the player can deal a critical hit or not.
+	 * @return Whether the hit is a critical hit or not.
 	 */
-	private boolean canDealCritical() {
+	private boolean isCritical() {
 		final Player player = profile.getPlayer();
 		final Behaviour behaviour = profile.getBehaviour();
-		return player.getFallDistance() > 0.0 && !behaviour.isOnGround() && !behaviour.isOnLadder()
-				&& !behaviour.isOnVine() && !behaviour.isInWater()
-				&& !player.hasPotionEffect(PotionEffectType.BLINDNESS) && !player.isInsideVehicle()
-				&& !player.isSprinting();
+		Bukkit.broadcastMessage("FALL DISTANCE: " + profile.getBehaviour().getFallDistance());
+		return player.getFallDistance() > 0.0 && !behaviour.isOnLadder() && !behaviour.isOnVine()
+				&& !behaviour.isInWater() && !player.hasPotionEffect(PotionEffectType.BLINDNESS)
+				&& !player.isInsideVehicle() && !player.isSprinting();
 	}
 
-	private boolean isInvalidCritical() {
+	private boolean isValidCritical() {
 		final double y = profile.getPlayer().getLocation().getY();
-		return profile.getBehaviour().getBlockUnderPlayer().getType().isSolid() && (y % 1.9 == 0.0 || y % 0.5 == 1.0);
+		return !profile.getBehaviour().getBlockUnderPlayer().getType().isSolid() && (y % 1.0 != 0.0 || y % 0.5 != 1.0);
 	}
 
 	@Override

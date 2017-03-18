@@ -9,8 +9,7 @@ public class Autoclicker extends Check {
 	public Autoclicker(Profile profile) {
 		super(profile, CheckType.AUTOCLICKER);
 
-		versions.add(new AutoclickerDamage(this));
-		versions.add(new AutoclickerInteract(this));
+		versions.add(new AutoclickerA(this));
 	}
 
 }

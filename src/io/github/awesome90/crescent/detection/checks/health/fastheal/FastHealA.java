@@ -52,7 +52,7 @@ public class FastHealA extends CheckVersion {
 		final long current = System.currentTimeMillis();
 
 		// The amount of time that it takes to regenerate 1 health.
-		long regenRate = 0;
+		int regenRate = 0;
 
 		if (health == profile.getPlayer().getMaxHealth()) {
 			/*

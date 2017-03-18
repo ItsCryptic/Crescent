@@ -8,7 +8,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
 import io.github.awesome90.crescent.commands.CommandCrescent;
-import io.github.awesome90.crescent.detection.CheckType;
+import io.github.awesome90.crescent.listeners.BehaviourListeners;
 import io.github.awesome90.crescent.listeners.DetectionListener;
 
 public final class Crescent extends JavaPlugin {
@@ -42,10 +42,9 @@ public final class Crescent extends JavaPlugin {
 	}
 
 	private void registerListeners() {
-		final DetectionListener detections = new DetectionListener();
-
 		final PluginManager pm = Bukkit.getPluginManager();
-		pm.registerEvents(detections, this);
+		pm.registerEvents(new DetectionListener(), this);
+		pm.registerEvents(new BehaviourListeners(), this);
 	}
 
 	/**

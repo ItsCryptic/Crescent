@@ -15,11 +15,17 @@ public class Behaviour {
 	private final Profile profile;
 
 	/**
+	 * The y coordinate the player was last at before they started falling.
+	 */
+	private double lastY;
+
+	/**
 	 * @param profile
 	 *            The profile of the player whose behaviour is being analysed.
 	 */
 	public Behaviour(Profile profile) {
 		this.profile = profile;
+		this.lastY = -1.0;
 	}
 
 	/**
@@ -146,6 +152,19 @@ public class Behaviour {
 			}
 		}
 		return 0;
+	}
+
+	public final double getLastY() {
+		return lastY;
+	}
+
+	public final void setLastY(double lastY) {
+		this.lastY = lastY;
+	}
+
+	public final double getFallDistance() {
+		// The player cannot have a negative fall distance.
+		return Math.max(lastY - getPlayer().getLocation().getY(), 0.0);
 	}
 
 	/**
