@@ -6,6 +6,9 @@ Crescent is still under development but hopes to be ready for use soon.
 
 Thank you for showing interest in the project! :)
 
+You can join our Discord server by using this link:
+https://discord.gg/uen8Ve2
+
 # Features
 
 - Open source. Anyone can contribute.
