@@ -1,7 +1,8 @@
 package io.github.awesome90.crescent.detection.checks.interact.autoclicker;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerAnimationType;
 
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
@@ -17,8 +18,12 @@ public class AutoclickerDamage extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
-		if (event instanceof EntityDamageByEntityEvent) {
-			store.call();
+		if (event instanceof PlayerAnimationEvent) {
+			final PlayerAnimationEvent pae = (PlayerAnimationEvent) event;
+
+			if (pae.getAnimationType() == PlayerAnimationType.ARM_SWING) {
+				store.call();
+			}
 		}
 	}
 

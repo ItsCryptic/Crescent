@@ -6,12 +6,12 @@ import io.github.awesome90.crescent.Crescent;
 
 public enum CheckType {
 	WATERWALK("WaterWalk", false, 10), NOFALL("NoFall", false, 10), ANTIVELOCITY("AntiVelocity", false, 10), SNEAK(
-			"Sneak", false,
-			10), FLY("Fly", false, 10), FASTBOW("Fastbow", false, 10), SPEED("Speed", false, 10), KILLAURA("Killaura",
-					true, 10), FASTHEAL("FastHeal", false, 10), HIGHJUMP("HighJump", false, 10), CRITICALS("Criticals",
-							false, 10), REACH("Reach", false, 10), INVENTORYTWEAKS("InventoryTweaks", false,
-									10), PACKETS("Packets", false, 10), LIQUIDS("Liquids", false, 10), ANTIDAMAGE(
-											"AntiDamage", false, 10), AUTOCLICKER("Autoclicker", false, 10);
+			"Sneak", false, 10), FLY("Fly", false, 10), FASTBOW("Fastbow", false, 10), SPEED("Speed", false,
+					10), KILLAURA("Killaura", true, 10), FASTHEAL("FastHeal", false, 10), HIGHJUMP("HighJump", false,
+							10), CRITICALS("Criticals", false, 10), REACH("Reach", false, 10), INVENTORYTWEAKS(
+									"InventoryTweaks", false, 10), PACKETS("Packets", false, 10), LIQUIDS("Liquids",
+											false, 10), ANTIDAMAGE("AntiDamage", false, 10), AUTOCLICKER("Autoclicker",
+													false, 10), NOSWING("NoSwing", false, 10);
 
 	private final String name;
 	private final boolean canLearn;

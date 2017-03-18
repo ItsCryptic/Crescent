@@ -23,10 +23,9 @@ public class AntiVelocityA extends CheckVersion {
 		 * Thanks Eyremba for identifying these sources of false positives :D
 		 * (https://github.com/Eyremba).
 		 */
-		if (behaviour.isOnLadder() || behaviour.isInWeb()) {
+		if (behaviour.isOnLadder() || behaviour.isInWeb() || behaviour.getHeightOfSpace() <= 2) {
 			return;
 		}
-
 		if (event instanceof PlayerVelocityEvent) {
 			final PlayerVelocityEvent pve = (PlayerVelocityEvent) event;
 

@@ -41,7 +41,7 @@ public class KillauraLearn extends CheckVersion {
 			final int ping = profile.getPing();
 
 			// Add one, as this can't be zero as it will mess up our
-			// calculations.
+			// calculations if it is.
 			final double angle = Helper.getYawBetween(profile.getPlayer().getEyeLocation(),
 					edbe.getEntity().getLocation()) + 1;
 

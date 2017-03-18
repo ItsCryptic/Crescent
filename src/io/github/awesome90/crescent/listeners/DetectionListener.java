@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 
@@ -118,7 +118,7 @@ public class DetectionListener implements Listener {
 	}
 
 	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent event) {
+	public void onPlayerInteract(PlayerAnimationEvent event) {
 		final Player player = event.getPlayer();
 
 		getCheckVersion(player, CheckType.AUTOCLICKER, "Interact").call(event);
