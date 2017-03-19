@@ -55,9 +55,7 @@ public class ReachA extends CheckVersion {
 
 				// If enough data has been collected.
 				if (previousReach.size() >= VALIDATION) {
-					if (getStrangeReachPercentage() > 50.0) {
-						// More than half of the player's hits have been
-						// suspicious. This can't be right.
+					if (getStrangeReachPercentage() > 100.0) {
 						callback(true);
 					}
 				}

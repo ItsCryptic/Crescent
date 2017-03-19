@@ -70,8 +70,15 @@ public class Behaviour {
 	public final boolean isOnGround() {
 		final Player player = profile.getPlayer();
 
-		if (getBlockUnderPlayer().getType().isSolid() || player.getLocation().getBlockY() == player.getWorld()
-				.getHighestBlockYAt(player.getLocation().getBlockX(), player.getLocation().getBlockZ())) {
+		if (getBlockUnderPlayer().getType().isSolid()) {
+			return true;
+		}
+
+		// Check if the player is shifting on the edge of a block.
+		final Block negativeSide = player.getLocation().clone().subtract(0.0, 0.5, 0.0).getBlock(),
+				positiveSide = player.getLocation().add(0.0, 0.5, 0.0).getBlock();
+
+		if (negativeSide.getType().isSolid() || positiveSide.getType().isSolid()) {
 			return true;
 		}
 
@@ -131,6 +138,13 @@ public class Behaviour {
 	}
 
 	/**
+	 * @return If the player is ascending or not.
+	 */
+	public final boolean isAscending() {
+		return getPlayer().getVelocity().getY() > 0.0;
+	}
+
+	/**
 	 * @param level
 	 *            The level of the enchantment.
 	 * @param typeModifier
@@ -154,14 +168,24 @@ public class Behaviour {
 		return 0;
 	}
 
+	/**
+	 * @return The last y coordinate that the player was at the ground at.
+	 */
 	public final double getLastY() {
 		return lastY;
 	}
 
+	/**
+	 * @param lastY
+	 *            The value you want to update the lastY variable to.
+	 */
 	public final void setLastY(double lastY) {
 		this.lastY = lastY;
 	}
 
+	/**
+	 * @return The distance that the player has fallen.
+	 */
 	public final double getFallDistance() {
 		// The player cannot have a negative fall distance.
 		return Math.max(lastY - getPlayer().getLocation().getY(), 0.0);
