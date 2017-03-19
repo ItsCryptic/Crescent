@@ -1,4 +1,4 @@
-![Crescent Logo](/Logo.png?raw=true)
+![Crescent Logo](https://github.com/awesome90/Crescent/blob/master/Logo.png?raw=true)
 
 This plugin aims to eradicate cheating from servers by making cheating not significantly advantageous enough for players.
 
