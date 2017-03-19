@@ -14,7 +14,7 @@ import io.github.awesome90.crescent.util.Helper;
 public class ReachA extends CheckVersion {
 
 	private static final double ALLOWED_REACH = Crescent.getInstance().getConfig().getDouble("reach.a.allowedReach");
-	private static final double ALLOWED_REACH_SQUARED = ALLOWED_REACH * ALLOWED_REACH;
+	private static final double ALLOWED_REACH_SQUARED = Math.pow(ALLOWED_REACH + 0.3, 2.0);
 	private static final double ALLOWED_REACH_DIFFERENCE = Crescent.getInstance().getConfig()
 			.getDouble("reach.a.allowedReachDifference");
 	/**

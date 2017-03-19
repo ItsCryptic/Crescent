@@ -1,7 +1,11 @@
 package io.github.awesome90.crescent.behaviour;
 
+import java.util.ArrayList;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -70,19 +74,51 @@ public class Behaviour {
 	public final boolean isOnGround() {
 		final Player player = profile.getPlayer();
 
-		if (getBlockUnderPlayer().getType().isSolid()) {
+		final Block under = getBlockUnderPlayer();
+
+		if (under.getType().isSolid()) {
 			return true;
 		}
 
-		// Check if the player is shifting on the edge of a block.
-		final Block negativeSide = player.getLocation().clone().subtract(0.0, 0.5, 0.0).getBlock(),
-				positiveSide = player.getLocation().add(0.0, 0.5, 0.0).getBlock();
+		// The player could be shifting on the edge of a block.
 
-		if (negativeSide.getType().isSolid() || positiveSide.getType().isSolid()) {
+		final ArrayList<Block> nearbyBlocks = getSurroundingBlocks(1);
+
+		Block nearest = getBlockUnderPlayer();
+
+		for (Block block : nearbyBlocks) {
+			if (block.getY() == under.getY()) {
+				Bukkit.broadcastMessage("test block");
+				if (Math.abs(player.getLocation().getY() - block.getY()) < Math
+						.abs(player.getLocation().getY() - nearest.getY())) {
+					nearest = block;
+				}
+			}
+		}
+
+		if (nearest.getType().isSolid()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public final ArrayList<Block> getSurroundingBlocks(int radius) {
+		final Location currentLocation = getPlayer().getLocation();
+		final World world = getPlayer().getWorld();
+
+		ArrayList<Block> blocks = new ArrayList<Block>();
+
+		for (int x = -radius; x <= radius; x++) {
+			for (int y = -radius; y <= radius; y++) {
+				for (int z = -radius; z <= radius; z++) {
+					blocks.add(world.getBlockAt(currentLocation.getBlockX() + x, currentLocation.getBlockY() + y,
+							currentLocation.getBlockZ() + z));
+				}
+			}
+		}
+
+		return blocks;
 	}
 
 	/**
@@ -159,8 +195,8 @@ public class Behaviour {
 	 * @return The height of the space that the player is in.
 	 */
 	public final int getHeightOfSpace() {
-		for (int y = 1; y <= getPlayer().getWorld().getMaxHeight(); y++) {
-			final Location added = getPlayer().getLocation().clone().add(0, y, 0);
+		for (int y = 0; y < getPlayer().getWorld().getMaxHeight(); y++) {
+			final Location added = getPlayer().getLocation().clone().add(0, y + 1, 0);
 			if (added.getBlock().getType().isSolid()) {
 				return y;
 			}

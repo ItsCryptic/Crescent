@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -21,10 +22,12 @@ public class BehaviourListeners implements Listener {
 
 		final Behaviour behaviour = Profile.getProfile(player.getUniqueId()).getBehaviour();
 
-		if (behaviour.getLastY() == -1.0 || (from.isSolid() && to == Material.AIR)) {
+		if (behaviour.getLastY() == -1.0 || !behaviour.isDescending() || (from.isSolid() && to == Material.AIR)) {
 			behaviour.setLastY(player.getLocation().getY());
 			return;
 		}
+
+		Bukkit.broadcastMessage("ON GROUND: " + behaviour.isOnGround());
 	}
 
 }

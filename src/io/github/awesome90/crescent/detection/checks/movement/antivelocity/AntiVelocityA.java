@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.detection.checks.movement.antivelocity;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerVelocityEvent;
@@ -23,6 +24,7 @@ public class AntiVelocityA extends CheckVersion {
 		 * Thanks Eyremba for identifying these sources of false positives :D
 		 * (https://github.com/Eyremba).
 		 */
+		Bukkit.broadcastMessage("height of space: " + behaviour.getHeightOfSpace());
 		if (behaviour.isOnLadder() || behaviour.isInWeb() || behaviour.getHeightOfSpace() <= 2) {
 			return;
 		}
