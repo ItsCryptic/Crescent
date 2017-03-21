@@ -6,8 +6,9 @@ Crescent is still under development but hopes to be ready for use soon.
 
 Thank you for showing interest in the project! :)
 
-You can join our Discord server by using this link:
-https://discord.gg/uen8Ve2
+We used to have a Discord server, but I'm not going to have too much time to maintain it, so unfortunately I had to delete it. It may return.
+
+Suggestions can be sent to me on Discord at Awesome90#4116
 
 # Features
 
