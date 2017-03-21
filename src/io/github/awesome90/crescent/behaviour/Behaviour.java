@@ -2,7 +2,6 @@ package io.github.awesome90.crescent.behaviour;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -23,6 +22,9 @@ public class Behaviour {
 	 */
 	private double lastY;
 
+	private double lastSprint;
+	private double lastFly;
+
 	/**
 	 * @param profile
 	 *            The profile of the player whose behaviour is being analysed.
@@ -30,6 +32,8 @@ public class Behaviour {
 	public Behaviour(Profile profile) {
 		this.profile = profile;
 		this.lastY = -1.0;
+		this.lastSprint = -1.0;
+		this.lastFly = -1.0;
 	}
 
 	/**
@@ -88,7 +92,6 @@ public class Behaviour {
 
 		for (Block block : nearbyBlocks) {
 			if (block.getY() == under.getY()) {
-				Bukkit.broadcastMessage("test block");
 				if (Math.abs(player.getLocation().getY() - block.getY()) < Math
 						.abs(player.getLocation().getY() - nearest.getY())) {
 					nearest = block;
@@ -195,13 +198,14 @@ public class Behaviour {
 	 * @return The height of the space that the player is in.
 	 */
 	public final int getHeightOfSpace() {
-		for (int y = 0; y < getPlayer().getWorld().getMaxHeight(); y++) {
-			final Location added = getPlayer().getLocation().clone().add(0, y + 1, 0);
+		final int max = getPlayer().getWorld().getMaxHeight();
+		for (int y = 0; y < max; y++) {
+			final Location added = getPlayer().getLocation().clone().add(0, y, 0);
 			if (added.getBlock().getType().isSolid()) {
 				return y;
 			}
 		}
-		return 0;
+		return max;
 	}
 
 	/**
@@ -217,6 +221,22 @@ public class Behaviour {
 	 */
 	public final void setLastY(double lastY) {
 		this.lastY = lastY;
+	}
+
+	public double getLastSprint() {
+		return lastSprint;
+	}
+
+	public void setLastSprint(double lastSprint) {
+		this.lastSprint = lastSprint;
+	}
+
+	public double getLastFly() {
+		return lastFly;
+	}
+
+	public void setLastFly(double lastFly) {
+		this.lastFly = lastFly;
 	}
 
 	/**

@@ -21,7 +21,6 @@ import io.github.awesome90.crescent.detection.checks.interact.autoclicker.Autocl
 import io.github.awesome90.crescent.detection.checks.interact.fastbow.Fastbow;
 import io.github.awesome90.crescent.detection.checks.movement.antivelocity.AntiVelocity;
 import io.github.awesome90.crescent.detection.checks.movement.fly.Fly;
-import io.github.awesome90.crescent.detection.checks.movement.highjump.HighJump;
 import io.github.awesome90.crescent.detection.checks.movement.impossible.Impossible;
 import io.github.awesome90.crescent.detection.checks.movement.packets.Packets;
 import io.github.awesome90.crescent.detection.checks.movement.speed.Speed;
@@ -85,7 +84,6 @@ public class Profile {
 		checks.add(new WaterWalk(this));
 		checks.add(new Killaura(this));
 		checks.add(new FastHeal(this));
-		checks.add(new HighJump(this));
 		checks.add(new Criticals(this));
 		checks.add(new Reach(this));
 		checks.add(new Packets(this));

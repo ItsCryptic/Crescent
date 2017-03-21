@@ -77,9 +77,9 @@ public class FlyA extends CheckVersion {
 					 * I roughly measured jumping as 0.25 as a vector squared
 					 * between the to and from points.
 					 * 
-					 * Here, 0.35 is being used to avoid false positives.
+					 * Here, 0.30 is being used to avoid false positives.
 					 */
-					if (distanceSquared > 0.35 && timeInAir > allowed) {
+					if (distanceSquared > 0.30 && timeInAir > allowed) {
 						callback(true);
 					}
 				} else {

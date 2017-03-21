@@ -34,7 +34,7 @@ public class KillauraLearn extends CheckVersion {
 			final double averageReach = reach.getAverageSquaredReach();
 
 			final AutoclickerA autoclicker = (AutoclickerA) profile.getCheck(CheckType.AUTOCLICKER)
-					.getCheckVersion("Damage");
+					.getCheckVersion("A");
 
 			final double currentDamageCPS = autoclicker.getStore().getCurrentClickRate();
 

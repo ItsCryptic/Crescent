@@ -62,7 +62,15 @@ public class SpeedA extends CheckVersion {
 			 * Walking and flying (but not sprinting): 0.40, Sprinting and
 			 * flying: 1.25
 			 */
-			if (player.isFlying() && player.isSprinting()) {
+			final long current = System.currentTimeMillis();
+			if ((player.isFlying() && player.isSprinting())
+					|| (current - profile.getBehaviour().getLastFly() <= 500 && current - profile.getBehaviour()
+							.getLastSprint() <= 500) /*
+														 * Player is flying and
+														 * sprinting and flying
+														 * or has been in the
+														 * last half a second.
+														 */) {
 				if (distance > 1.25) {
 					callback(true);
 				}

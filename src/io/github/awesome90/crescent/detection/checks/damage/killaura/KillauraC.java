@@ -1,6 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
@@ -34,9 +33,6 @@ public class KillauraC extends CheckVersion {
 				final double playerYaw = profile.getPlayer().getEyeLocation().getYaw();
 
 				final double difference = Math.abs((360.0 - Math.abs(yawBetween)) - (360.0 - Math.abs(playerYaw)));
-
-				Bukkit.broadcastMessage(
-						"KillauraC yaw: " + yawBetween + " player yaw: " + playerYaw + " difference: " + difference);
 
 				if (yawBetween >= DISALLOWED_ANGLE) {
 					callback(true);
