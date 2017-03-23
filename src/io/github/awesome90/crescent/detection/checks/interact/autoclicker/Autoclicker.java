@@ -11,5 +11,5 @@ public class Autoclicker extends Check {
 
 		versions.add(new AutoclickerA(this));
 	}
-
+	
 }

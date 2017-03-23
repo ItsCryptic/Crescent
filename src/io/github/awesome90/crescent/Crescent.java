@@ -28,7 +28,7 @@ public final class Crescent extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		protocolManager = ProtocolLibrary.getProtocolManager();
+		this.protocolManager = ProtocolLibrary.getProtocolManager();
 
 		// Configuration.
 		loadConfig();
