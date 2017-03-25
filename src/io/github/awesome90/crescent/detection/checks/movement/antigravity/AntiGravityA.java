@@ -1,6 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.movement.antigravity;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -21,14 +20,19 @@ public class AntiGravityA extends CheckVersion {
 
 			final Behaviour behaviour = profile.getBehaviour();
 
-			if (!behaviour.isOnGround()) {
-				final double expected = behaviour.getMotion().calculateGravityEffect(),
-						actual = pme.getTo().getY() - pme.getFrom().getY(), difference = expected - actual;
+			if (!behaviour.isOnGround() && !behaviour.isInLiquid()) {
+				if (behaviour.getMotion().isDescending()) {
 
-				if (difference > 0.1) {
-					Bukkit.broadcastMessage("actual: " + actual + ", expected: " + expected + ", fall distance: "
-							+ behaviour.getMotion().getFallDistance());
-					callback(true);
+					final double difference = Math.abs((behaviour.getMotion()
+							.calculateGravityEffect() /*
+														 * Expected y difference
+														 */)
+							- (pme.getTo().getY() - pme.getFrom()
+									.getY()) /* Actual y difference */);
+
+					if (difference > 0.075) {
+						callback(true);
+					}
 				}
 			}
 		}

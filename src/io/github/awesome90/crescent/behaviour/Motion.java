@@ -39,8 +39,7 @@ public class Motion {
 			final double yDiff = (lastYDiff - 0.08) * 0.98;
 			this.lastYDiff = yDiff;
 
-			// Can't be smaller than zero.
-			return yDiff >= 0.0 ? yDiff : 0.0;
+			return yDiff;
 		}
 		return 0.0;
 	}
@@ -82,6 +81,20 @@ public class Motion {
 	public final double getFallDistance() {
 		// The player cannot have a negative fall distance.
 		return Math.max(lastY - behaviour.getPlayer().getLocation().getY(), 0.0);
+	}
+
+	/**
+	 * @return If the player is ascending or not.
+	 */
+	public final boolean isDescending() {
+		return behaviour.getPlayer().getVelocity().getY() < 0.0;
+	}
+
+	/**
+	 * @return If the player is ascending or not.
+	 */
+	public final boolean isAscending() {
+		return behaviour.getPlayer().getVelocity().getY() > 0.0;
 	}
 
 }

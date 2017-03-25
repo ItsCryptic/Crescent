@@ -48,7 +48,7 @@ public class FlyA extends CheckVersion {
 				 */
 				if (!profile.getBehaviour().isOnGround()
 						&& profile.getBehaviour().getBlockAbovePlayer().getType() == Material.AIR
-						&& !profile.getBehaviour().isDescending()) {
+						&& !profile.getBehaviour().getMotion().isDescending()) {
 
 					if (startTime == -1) {
 						startTime = System.currentTimeMillis();

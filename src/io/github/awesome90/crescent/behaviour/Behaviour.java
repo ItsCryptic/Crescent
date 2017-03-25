@@ -66,10 +66,17 @@ public class Behaviour {
 	}
 
 	/**
+	 * @return If the player is in a liquid block or not.
+	 */
+	public final boolean isInLiquid() {
+		return getBlockPlayerIsIn().isLiquid();
+	}
+
+	/**
 	 * @return If the player is on the ground or not.
 	 */
 	public final boolean isOnGround() {
-		return motion.getFallDistance() <= 0.5;
+		return getBlockUnderPlayer().getType().isSolid() || motion.getFallDistance() <= 0.5;
 	}
 
 	/**
@@ -115,20 +122,6 @@ public class Behaviour {
 		}
 
 		return 0;
-	}
-
-	/**
-	 * @return If the player is ascending or not.
-	 */
-	public final boolean isDescending() {
-		return getPlayer().getVelocity().getY() < 0.0;
-	}
-
-	/**
-	 * @return If the player is ascending or not.
-	 */
-	public final boolean isAscending() {
-		return getPlayer().getVelocity().getY() > 0.0;
 	}
 
 	/**

@@ -19,7 +19,7 @@ public class SpeedA extends CheckVersion {
 	@Override
 	public void call(Event event) {
 		// Causes false positives.
-		if (profile.getBehaviour().isDescending()) {
+		if (profile.getBehaviour().getMotion().isDescending()) {
 			return;
 		}
 

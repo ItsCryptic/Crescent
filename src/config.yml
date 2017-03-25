@@ -36,7 +36,7 @@ fastbow:
   cheatConsider: 10
   prevent: true
   a:
-    allowedMinimumDifference: 250
+    allowedMinimumDifference: 200
 speed:
   cheatConsider: 10
   prevent: true
