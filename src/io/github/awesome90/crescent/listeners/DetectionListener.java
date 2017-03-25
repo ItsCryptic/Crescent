@@ -23,6 +23,11 @@ public class DetectionListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 		final Player player = event.getPlayer();
 
+		/*
+		 * Performance is very bad at the moment due to this listener due to
+		 * testing. I will make it better soon.
+		 */
+
 		getCheckVersion(player, CheckType.SPEED, "A").call(event);
 
 		getCheckVersion(player, CheckType.FLY, "A").call(event);
@@ -34,6 +39,8 @@ public class DetectionListener implements Listener {
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
 
 		getCheckVersion(player, CheckType.PACKETS, "A").call(event);
+
+		getCheckVersion(player, CheckType.ANTIGRAVITY, "A").call(event);
 	}
 
 	@EventHandler

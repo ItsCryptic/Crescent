@@ -2,8 +2,8 @@ package io.github.awesome90.crescent.detection.checks.interact.autoclicker;
 
 public class ClickRate {
 
-	private double cps;
-	private long time;
+	private final double cps;
+	private final long time;
 
 	public ClickRate(double cps) {
 		this.cps = cps;

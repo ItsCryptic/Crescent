@@ -63,8 +63,9 @@ public class SpeedA extends CheckVersion {
 			 * flying: 1.25
 			 */
 			final long current = System.currentTimeMillis();
-			if ((player.isFlying() && player.isSprinting())
-					|| (current - profile.getBehaviour().getLastFly() <= 500 && current - profile.getBehaviour()
+			if ((player.isFlying() && player.isSprinting()) || (current
+					- profile.getBehaviour().getMotion().getLastFly() <= 500
+					&& current - profile.getBehaviour().getMotion()
 							.getLastSprint() <= 500) /*
 														 * Player is flying and
 														 * sprinting and flying

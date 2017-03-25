@@ -5,6 +5,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import io.github.awesome90.crescent.behaviour.Behaviour;
@@ -17,22 +19,39 @@ public class BehaviourListeners implements Listener {
 		final Player player = event.getPlayer();
 
 		final Material from = event.getFrom().getBlock().getRelative(BlockFace.DOWN).getType();
-		final Material to = event.getTo().getBlock().getRelative(BlockFace.DOWN).getType();
 
 		final Behaviour behaviour = Profile.getProfile(player.getUniqueId()).getBehaviour();
 
 		final long current = System.currentTimeMillis();
 
 		if (player.isSprinting()) {
-			behaviour.setLastSprint(current);
+			behaviour.getMotion().setLastSprint(current);
 		}
 		if (player.isFlying()) {
-			behaviour.setLastFly(current);
+			behaviour.getMotion().setLastFly(current);
 		}
 
-		if (behaviour.getLastY() == -1.0 || !behaviour.isDescending() || (from.isSolid() && to == Material.AIR)) {
-			behaviour.setLastY(player.getLocation().getY());
+		if (from.isSolid() || behaviour.getMotion().getLastY() == -1.0 || !behaviour.isDescending()) {
+			behaviour.getMotion().setLastY(player.getLocation().getY());
+		}
+
+		if (behaviour.isOnGround() && behaviour.isAscending()) {
+			behaviour.getMotion().setLastYDiff(event.getTo().getY() - event.getFrom().getY());
+		}
+	}
+
+	@EventHandler
+	public void onEntityDamage(EntityDamageEvent event) {
+		if (!(event.getEntity() instanceof Player)) {
 			return;
+		}
+
+		if (event.getCause() == DamageCause.FALL) {
+			final Player player = (Player) event.getEntity();
+
+			final Behaviour behaviour = Profile.getProfile(player.getUniqueId()).getBehaviour();
+
+			behaviour.getMotion().setLastY(player.getLocation().getY());
 		}
 	}
 

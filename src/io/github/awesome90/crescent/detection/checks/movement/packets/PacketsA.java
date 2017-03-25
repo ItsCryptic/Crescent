@@ -41,11 +41,7 @@ public class PacketsA extends CheckVersion {
 					if (movementsPerTick > MAX_PACKETS_PER_TICK) {
 						// The player is sending more packets than allowed.
 
-						/*
-						 * There has to be a more efficient way to do this! Add
-						 * one to the ping to avoid dividing by zero.
-						 */
-						final double certaintyPercentage = ((movementsPerTick / (profile.getPing() + 1)) * 100.0) / 2.0;
+						final double certaintyPercentage = (movementsPerTick / MAX_PACKETS_PER_TICK);
 
 						/*
 						 * If we're over 100% sure, it's likely that the player

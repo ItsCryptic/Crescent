@@ -48,7 +48,7 @@ public class NoFallA extends CheckVersion {
 				final Material from = pme.getFrom().getBlock().getRelative(BlockFace.DOWN).getType();
 				final Material to = pme.getTo().getBlock().getRelative(BlockFace.DOWN).getType();
 
-				final double fallDistance = profile.getBehaviour().getFallDistance();
+				final double fallDistance = profile.getBehaviour().getMotion().getFallDistance();
 
 				if (fallDistance < 4.0) {
 					/*
@@ -124,9 +124,9 @@ public class NoFallA extends CheckVersion {
 		 * Take the smallest out of the calculated and the player's maximum
 		 * health.
 		 */
-		double damage = Math.min(
-				Math.ceil(Math.max(profile.getBehaviour().getLastY() - player.getLocation().getY(), fallDistance)) - 2,
-				profile.getPlayer().getMaxHealth());
+		double damage = Math.min(Math.ceil(
+				Math.max(profile.getBehaviour().getMotion().getLastY() - player.getLocation().getY(), fallDistance))
+				- 2, profile.getPlayer().getMaxHealth());
 
 		// Check to see if the player has feather falling.
 		double epf = 0.0;

@@ -33,7 +33,7 @@ public class CriticalsA extends CheckVersion {
 	private boolean isCritical() {
 		final Player player = profile.getPlayer();
 		final Behaviour behaviour = profile.getBehaviour();
-		Bukkit.broadcastMessage("FALL DISTANCE: " + profile.getBehaviour().getFallDistance());
+		Bukkit.broadcastMessage("FALL DISTANCE: " + profile.getBehaviour().getMotion().getFallDistance());
 		return player.getFallDistance() > 0.0 && !behaviour.isOnLadder() && !behaviour.isOnVine()
 				&& !behaviour.isInWater() && !player.hasPotionEffect(PotionEffectType.BLINDNESS)
 				&& !player.isInsideVehicle() && !player.isSprinting();

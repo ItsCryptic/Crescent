@@ -1,10 +1,7 @@
 package io.github.awesome90.crescent.behaviour;
 
-import java.util.ArrayList;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -17,13 +14,7 @@ public class Behaviour {
 
 	private final Profile profile;
 
-	/**
-	 * The y coordinate the player was last at before they started falling.
-	 */
-	private double lastY;
-
-	private double lastSprint;
-	private double lastFly;
+	private final Motion motion;
 
 	/**
 	 * @param profile
@@ -31,9 +22,11 @@ public class Behaviour {
 	 */
 	public Behaviour(Profile profile) {
 		this.profile = profile;
-		this.lastY = -1.0;
-		this.lastSprint = -1.0;
-		this.lastFly = -1.0;
+		this.motion = new Motion(this);
+	}
+
+	public final Motion getMotion() {
+		return motion;
 	}
 
 	/**
@@ -76,52 +69,7 @@ public class Behaviour {
 	 * @return If the player is on the ground or not.
 	 */
 	public final boolean isOnGround() {
-		final Player player = profile.getPlayer();
-
-		final Block under = getBlockUnderPlayer();
-
-		if (under.getType().isSolid()) {
-			return true;
-		}
-
-		// The player could be shifting on the edge of a block.
-
-		final ArrayList<Block> nearbyBlocks = getSurroundingBlocks(1);
-
-		Block nearest = getBlockUnderPlayer();
-
-		for (Block block : nearbyBlocks) {
-			if (block.getY() == under.getY()) {
-				if (Math.abs(player.getLocation().getY() - block.getY()) < Math
-						.abs(player.getLocation().getY() - nearest.getY())) {
-					nearest = block;
-				}
-			}
-		}
-
-		if (nearest.getType().isSolid()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public final ArrayList<Block> getSurroundingBlocks(int radius) {
-		final Location currentLocation = getPlayer().getLocation();
-		final World world = getPlayer().getWorld();
-
-		ArrayList<Block> blocks = new ArrayList<Block>();
-
-		for (int x = -radius; x <= radius; x++) {
-			for (int y = -radius; y <= radius; y++) {
-				for (int z = -radius; z <= radius; z++) {
-					blocks.add(world.getBlockAt(currentLocation.getBlockX() + x, currentLocation.getBlockY() + y,
-							currentLocation.getBlockZ() + z));
-				}
-			}
-		}
-
-		return blocks;
+		return motion.getFallDistance() <= 0.5;
 	}
 
 	/**
@@ -209,48 +157,9 @@ public class Behaviour {
 	}
 
 	/**
-	 * @return The last y coordinate that the player was at the ground at.
-	 */
-	public final double getLastY() {
-		return lastY;
-	}
-
-	/**
-	 * @param lastY
-	 *            The value you want to update the lastY variable to.
-	 */
-	public final void setLastY(double lastY) {
-		this.lastY = lastY;
-	}
-
-	public double getLastSprint() {
-		return lastSprint;
-	}
-
-	public void setLastSprint(double lastSprint) {
-		this.lastSprint = lastSprint;
-	}
-
-	public double getLastFly() {
-		return lastFly;
-	}
-
-	public void setLastFly(double lastFly) {
-		this.lastFly = lastFly;
-	}
-
-	/**
-	 * @return The distance that the player has fallen.
-	 */
-	public final double getFallDistance() {
-		// The player cannot have a negative fall distance.
-		return Math.max(lastY - getPlayer().getLocation().getY(), 0.0);
-	}
-
-	/**
 	 * @return Get the Player.
 	 */
-	private final Player getPlayer() {
+	protected final Player getPlayer() {
 		return profile.getPlayer();
 	}
 

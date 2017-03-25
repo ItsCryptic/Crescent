@@ -39,11 +39,7 @@ public class InventoryTweaksB extends CheckVersion {
 					slotsChosen.put(slot, slotsChosen.get(slot) + 1);
 				}
 
-				/*
-				 * If we're 3/4 of the way sure, the player is likely
-				 * suspicious.
-				 */
-				if (getStackChance() >= 75.0) {
+				if (getStackChance() >= 100.0) {
 					callback(true);
 				}
 			}
