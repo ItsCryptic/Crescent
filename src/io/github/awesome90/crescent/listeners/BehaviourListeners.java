@@ -1,6 +1,5 @@
 package io.github.awesome90.crescent.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -37,7 +36,6 @@ public class BehaviourListeners implements Listener {
 		}
 
 		if (!behaviour.isOnGround()) {
-			Bukkit.broadcastMessage("set expected");
 			behaviour.getMotion().setLastYDiff(event.getTo().getY() - event.getFrom().getY());
 		}
 	}

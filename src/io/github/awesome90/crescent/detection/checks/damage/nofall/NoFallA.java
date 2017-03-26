@@ -84,9 +84,7 @@ public class NoFallA extends CheckVersion {
 						 * is expected to be.
 						 */
 						Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), () -> {
-							if (player.getHealth() > expected) {
-								callback(true);
-							}
+							callback(player.getHealth() > expected);
 						}, 5L);
 
 					}

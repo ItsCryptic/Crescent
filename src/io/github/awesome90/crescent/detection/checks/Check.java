@@ -2,8 +2,6 @@ package io.github.awesome90.crescent.detection.checks;
 
 import java.util.ArrayList;
 
-import org.bukkit.event.Event;
-
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.info.Profile;
 
@@ -32,17 +30,6 @@ public abstract class Check {
 		}
 
 		return null;
-	}
-
-	/**
-	 * @param event
-	 *            The event called that is passed to each CheckVersion to
-	 *            analyse.
-	 */
-	public void call(Event event) {
-		for (CheckVersion version : versions) {
-			version.call(event);
-		}
 	}
 
 	/**

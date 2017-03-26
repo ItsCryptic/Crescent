@@ -74,16 +74,18 @@ public abstract class CheckVersion implements CheckApproach {
 	 *            Any additional information to be sent to users.
 	 */
 	public void callback(boolean suspicious) {
+		totalCalls++;
+
 		if (suspicious) {
 			final Detection detection = new Detection(profile, check, checkVersion, checkCurrentCertainty());
-			detection.alert();
+
 			// Add the detection to the list for this CheckType.
 			previous.add(detection);
 
 			improperCalls++;
-		}
 
-		totalCalls++;
+			detection.alert();
+		}
 	}
 
 	/**
@@ -91,7 +93,7 @@ public abstract class CheckVersion implements CheckApproach {
 	 *         previous checks).
 	 */
 	public final double calculateOverallCertainty() {
-		return (((improperCalls / totalCalls) * 100.0) / type.getCheatConsider()) * 100.0;
+		return (((improperCalls / totalCalls)) / type.getCheatConsider()) * 100.0;
 	}
 
 	public final CheckType getCheckType() {

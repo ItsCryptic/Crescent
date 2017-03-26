@@ -53,9 +53,7 @@ public class KillauraLearn extends CheckVersion {
 
 			final double comparison = learn.compare();
 
-			if (comparison > 50.0) {
-				callback(true);
-			}
+			callback(comparison > 100.0);
 		}
 	}
 

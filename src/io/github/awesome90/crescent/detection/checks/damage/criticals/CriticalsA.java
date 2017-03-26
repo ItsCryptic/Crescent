@@ -1,6 +1,6 @@
 package io.github.awesome90.crescent.detection.checks.damage.criticals;
 
-import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -19,11 +19,7 @@ public class CriticalsA extends CheckVersion {
 	@Override
 	public void call(Event event) {
 		if (event instanceof EntityDamageByEntityEvent) {
-			Bukkit.broadcastMessage("is critical: " + isCritical() + ", valid: " + isValidCritical());
-			if (isCritical() && !isValidCritical()) {
-				// This is not a valid critical hit.
-				callback(true);
-			}
+			callback(isCritical() && !isValidCritical());
 		}
 	}
 
@@ -33,15 +29,19 @@ public class CriticalsA extends CheckVersion {
 	private boolean isCritical() {
 		final Player player = profile.getPlayer();
 		final Behaviour behaviour = profile.getBehaviour();
-		Bukkit.broadcastMessage("FALL DISTANCE: " + profile.getBehaviour().getMotion().getFallDistance());
 		return player.getFallDistance() > 0.0 && !behaviour.isOnLadder() && !behaviour.isOnVine()
 				&& !behaviour.isInWater() && !player.hasPotionEffect(PotionEffectType.BLINDNESS)
-				&& !player.isInsideVehicle() && !player.isSprinting();
+				&& !player.isInsideVehicle() && !player.isSprinting() && !((Entity) player).isOnGround();
 	}
 
+	/**
+	 * @return Re-check whether the hit is valid using our values instead of
+	 *         Bukkit's (which can be faked by some clients, such as fall
+	 *         distance and whether the player is on ground).
+	 */
 	private boolean isValidCritical() {
-		final double y = profile.getPlayer().getLocation().getY();
-		return !profile.getBehaviour().getBlockUnderPlayer().getType().isSolid() && (y % 1.0 != 0.0 || y % 0.5 != 1.0);
+		final Behaviour behaviour = profile.getBehaviour();
+		return !behaviour.isOnGround() && behaviour.getMotion().getFallDistance() > 0.0;
 	}
 
 	@Override

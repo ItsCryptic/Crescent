@@ -43,8 +43,17 @@ speed:
 killaura:
   cheatConsider: 10
   prevent: true
+  a:
+    # The amount of times a player is allowed to one entity per second.
+    allowedHitsPerSecond: 3.5
+    # The time at which the amount of entities the player hits in a specific time is reset.
+    # This is measured in milliseconds.
+    attackTimeCountInterval: 2500
   c:
-    disallowedAngle: 120
+    # The angle at which the anticheat believes that the player is behaving in a suspicious manner.
+    disallowedAngle: 50.0
+    # The amount of hits that are needed to verify an accurate picture of the player's hit angles.
+    neededSamples: 5
 fastheal:
   cheatConsider: 10
   prevent: true
@@ -70,6 +79,7 @@ packets:
   cheatConsider: 10
   prevent: true
   a:
+    # The amount of packets that are allowed to be sent per tick by a player.
     maxPacketsPerTick: 1.1
 liquids:
   cheatConsider: 10
@@ -80,3 +90,11 @@ antidamage:
 autoclicker:
   cheatConsider: 10
   prevent: true
+  a:
+    # When the player clicks, the time below will be how far we check into history for
+    # suspicious activity.
+    reviewTime: 5000
+    # The least amount of data needed to form a judgement on whether te player is using an autoclicker.
+    neededSamples = 10;
+    # The allowed differences between click rates.
+    allowedInterval: 1.25

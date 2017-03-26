@@ -76,7 +76,9 @@ public class Behaviour {
 	 * @return If the player is on the ground or not.
 	 */
 	public final boolean isOnGround() {
-		return getBlockUnderPlayer().getType().isSolid() || motion.getFallDistance() <= 0.5;
+		final double y = getPlayer().getLocation().getY();
+		return y % 1.0 == 0.0 || y % 0.5 == 0.0 || getBlockUnderPlayer().getType().isSolid()
+				|| motion.getFallDistance() <= 0.5;
 	}
 
 	/**

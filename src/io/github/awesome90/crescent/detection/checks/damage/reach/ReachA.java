@@ -55,9 +55,7 @@ public class ReachA extends CheckVersion {
 
 				// If enough data has been collected.
 				if (previousReach.size() >= VALIDATION) {
-					if (getStrangeReachPercentage() > 100.0) {
-						callback(true);
-					}
+					callback(getStrangeReachPercentage() > 100.0);
 				}
 			}
 		}

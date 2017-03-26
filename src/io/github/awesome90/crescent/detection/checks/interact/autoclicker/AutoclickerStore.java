@@ -55,42 +55,23 @@ public class AutoclickerStore {
 		return totalClicks / (System.currentTimeMillis() - totalStartTime);
 	}
 
-	public int getClicksInTime(long time) {
-		int clicks = 0;
-
+	/**
+	 * @param time
+	 *            The amount of time to check for in milliseconds.
+	 * @return The clicks that have happened in last specified amount of time.
+	 */
+	public ArrayList<Double> getCPSInTime(long time) {
 		final long current = System.currentTimeMillis();
+
+		ArrayList<Double> clicks = new ArrayList<Double>();
 
 		for (ClickRate rate : clickRates) {
 			if (current - rate.getTime() <= time) {
-				clicks++;
+				clicks.add(rate.getCPS());
 			}
 		}
 
 		return clicks;
-	}
-
-	/**
-	 * @param time
-	 *            The amount of time to check for in milliseconds.
-	 * @return The range of clicks per second in this time.
-	 */
-	public double getCPSRangeInTime(long time) {
-		final long current = System.currentTimeMillis();
-
-		double largest = 0.0, smallest = 0.0;
-
-		for (ClickRate rate : clickRates) {
-			if (current - rate.getTime() <= time) {
-				if (rate.getCPS() > largest) {
-					largest = rate.getCPS();
-				}
-				if (rate.getCPS() < smallest) {
-					smallest = rate.getCPS();
-				}
-			}
-		}
-
-		return largest - smallest;
 	}
 
 }

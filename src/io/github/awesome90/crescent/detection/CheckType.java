@@ -26,8 +26,14 @@ public enum CheckType {
 
 		final FileConfiguration fc = Crescent.getInstance().getConfig();
 
-		this.cheatConsider = fc.getInt(name + ".cheatConsider");
-		this.prevent = fc.getBoolean(name + ".prevent");
+		/*
+		 * The name of the check used to signify this check in the file (in
+		 * lower case).
+		 */
+		final String systemName = name.toLowerCase();
+
+		this.cheatConsider = fc.getInt(systemName + ".cheatConsider");
+		this.prevent = fc.getBoolean(systemName + ".prevent");
 	}
 
 	/**

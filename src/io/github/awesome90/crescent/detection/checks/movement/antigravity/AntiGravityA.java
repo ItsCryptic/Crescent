@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.detection.checks.movement.antigravity;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -20,9 +21,9 @@ public class AntiGravityA extends CheckVersion {
 
 			final Behaviour behaviour = profile.getBehaviour();
 
-			if (!behaviour.isOnGround() && !behaviour.isInLiquid()) {
+			if (!behaviour.isOnGround() && !behaviour.isInLiquid() && !behaviour.isInWeb()) {
 				if (behaviour.getMotion().isDescending()) {
-
+					Bukkit.broadcastMessage("y vel: " + pme.getPlayer().getVelocity().getY());
 					final double difference = Math.abs((behaviour.getMotion()
 							.calculateGravityEffect() /*
 														 * Expected y difference

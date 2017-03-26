@@ -36,8 +36,13 @@ public class Motion {
 	 */
 	public double calculateGravityEffect() {
 		if (lastYDiff != -1.0) {
-			final double yDiff = (lastYDiff - 0.08) * 0.98;
+			double yDiff = (lastYDiff - 0.08) * 0.98;
 			this.lastYDiff = yDiff;
+
+			if (yDiff > 3.92) {
+				// 3.92 is the terminal velocity for a player.
+				yDiff = 3.92;
+			}
 
 			return yDiff;
 		}
