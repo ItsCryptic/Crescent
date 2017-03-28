@@ -16,8 +16,16 @@ import org.bukkit.event.player.PlayerVelocityEvent;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 import io.github.awesome90.crescent.info.Profile;
+import io.github.awesome90.crescent.util.PlayerPacketEvent;
 
 public class DetectionListener implements Listener {
+
+	@EventHandler
+	public void onPlayerPacket(PlayerPacketEvent event) {
+		final Player player = event.getPlayer();
+
+		getCheckVersion(player, CheckType.PACKETS, "A").call(event);
+	}
 
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
@@ -37,8 +45,6 @@ public class DetectionListener implements Listener {
 		getCheckVersion(player, CheckType.NOFALL, "A").call(event);
 
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
-
-		getCheckVersion(player, CheckType.PACKETS, "A").call(event);
 
 		getCheckVersion(player, CheckType.ANTIGRAVITY, "A").call(event);
 	}

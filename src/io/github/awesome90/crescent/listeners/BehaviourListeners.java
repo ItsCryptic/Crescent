@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -9,10 +10,35 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
+
+import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.info.Profile;
+import io.github.awesome90.crescent.util.PlayerPacketEvent;
 
 public class BehaviourListeners implements Listener {
+
+	public void registerPacketListeners() {
+		final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+		for (PacketType packetType : new PacketType[] { PacketType.Play.Client.POSITION }) {
+			protocolManager
+					.addPacketListener(new PacketAdapter(Crescent.getInstance(), ListenerPriority.NORMAL, packetType) {
+						@Override
+						public void onPacketReceiving(PacketEvent event) {
+							if (event.getPacketType() == packetType) {
+								Bukkit.getPluginManager()
+										.callEvent(new PlayerPacketEvent(event.getPlayer(), event.getPacket()));
+							}
+						}
+					});
+		}
+	}
 
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {

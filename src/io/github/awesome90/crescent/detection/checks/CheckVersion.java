@@ -2,6 +2,8 @@ package io.github.awesome90.crescent.detection.checks;
 
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
+
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.Detection;
 import io.github.awesome90.crescent.info.Profile;
@@ -42,13 +44,13 @@ public abstract class CheckVersion implements CheckApproach {
 	 * The total number of times that this particular CheckVersion has been
 	 * called.
 	 */
-	protected long totalCalls;
+	protected int totalCalls;
 
 	/**
 	 * The total number of times that this CheckVersion has returned with belief
 	 * that the player could be cheating.
 	 */
-	protected long improperCalls;
+	protected int improperCalls;
 
 	public CheckVersion(Check check, String checkVersion, String description) {
 		this.check = check;
@@ -58,7 +60,7 @@ public abstract class CheckVersion implements CheckApproach {
 		this.description = description;
 		this.previous = new ArrayList<Detection>();
 
-		this.totalCalls = 1;
+		this.totalCalls = 0;
 		this.improperCalls = 0;
 	}
 
@@ -93,6 +95,8 @@ public abstract class CheckVersion implements CheckApproach {
 	 *         previous checks).
 	 */
 	public final double calculateOverallCertainty() {
+		Bukkit.broadcastMessage(
+				"imp: " + improperCalls + " total: " + totalCalls + " cheat: " + type.getCheatConsider());
 		return (((improperCalls / totalCalls)) / type.getCheatConsider()) * 100.0;
 	}
 

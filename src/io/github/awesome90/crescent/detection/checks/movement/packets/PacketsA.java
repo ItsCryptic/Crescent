@@ -1,11 +1,14 @@
 package io.github.awesome90.crescent.detection.checks.movement.packets;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerMoveEvent;
+
+import com.comphenix.protocol.PacketType;
 
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
+import io.github.awesome90.crescent.util.PlayerPacketEvent;
 
 public class PacketsA extends CheckVersion {
 
@@ -23,7 +26,14 @@ public class PacketsA extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
-		if (event instanceof PlayerMoveEvent) {
+		if (event instanceof PlayerPacketEvent) {
+
+			final PlayerPacketEvent ppe = (PlayerPacketEvent) event;
+
+			if (ppe.getPacket().getType() != PacketType.Play.Client.POSITION) {
+				return;
+			}
+
 			if (lastTime != -1) {
 				final long difference = System.currentTimeMillis() - lastTime;
 
@@ -36,12 +46,14 @@ public class PacketsA extends CheckVersion {
 					 * I have tested the value this gives and the normal client
 					 * sends about 1 packet per tick.
 					 */
-					final double movementsPerTick = (((double) movements / (double) difference) * 1000.0) / 20.0;
+					final double movementsPerTick = ((double) movements / ((double) difference / 1000.0)) / 20.0;
+
+					Bukkit.broadcastMessage("mps: " + movementsPerTick);
 
 					if (movementsPerTick > MAX_PACKETS_PER_TICK) {
 						// The player is sending more packets than allowed.
 
-						final double certaintyPercentage = (movementsPerTick / MAX_PACKETS_PER_TICK);
+						final double certaintyPercentage = (movementsPerTick / MAX_PACKETS_PER_TICK) * 100.0;
 
 						/*
 						 * If we're over 100% sure, it's likely that the player

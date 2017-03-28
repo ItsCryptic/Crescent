@@ -95,6 +95,9 @@ autoclicker:
     # suspicious activity.
     reviewTime: 5000
     # The least amount of data needed to form a judgement on whether te player is using an autoclicker.
-    neededSamples = 10;
+    neededSamples: 10
     # The allowed differences between click rates.
     allowedInterval: 1.25
+antigravity:
+    cheatConsider: 10
+    prevent: true
