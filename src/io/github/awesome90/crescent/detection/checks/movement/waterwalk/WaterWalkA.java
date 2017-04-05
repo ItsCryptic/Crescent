@@ -16,21 +16,14 @@ public class WaterWalkA extends CheckVersion {
 
 	private static final int WALK_TIME = Crescent.getInstance().getConfig().getInt("waterwalk.a.walkTime");
 
-	/**
-	 * The time that the player has been standing on water since.
-	 */
-	private long startTime;
-
 	public WaterWalkA(Check check) {
 		super(check, "A", "Checks whether the player is walking on water");
-
-		this.startTime = -1;
 	}
 
 	@Override
 	public void call(Event event) {
 		if (event instanceof PlayerMoveEvent) {
-			PlayerMoveEvent pme = (PlayerMoveEvent) event;
+			final PlayerMoveEvent pme = (PlayerMoveEvent) event;
 
 			final Behaviour behaviour = profile.getBehaviour();
 			final GameMode mode = profile.getPlayer().getGameMode();
@@ -50,21 +43,11 @@ public class WaterWalkA extends CheckVersion {
 					return;
 				}
 
-				if (pme.getFrom().getBlockY() == pme.getTo().getBlockY() && isWater(from) && isWater(to)) {
+				final double fromY = pme.getFrom().getY(), toY = pme.getTo().getY();
 
-					// The player is standing on water.
-					if (startTime == -1) {
-						startTime = System.currentTimeMillis();
-					}
-
-					if (System.currentTimeMillis() - startTime > WALK_TIME) {
-						callback(true);
-						startTime = -1;
-						return;
-					}
-
-				} else {
-					startTime = -1;
+				// If the player is walking on a block.
+				if ((fromY % 1.0 == 0.0 || fromY % 0.5 == 0.0) && (toY % 1.0 == 0.0 || toY % 0.5 == 0.0)) {
+					callback(true);
 				}
 			}
 
@@ -78,7 +61,7 @@ public class WaterWalkA extends CheckVersion {
 	 */
 	@Override
 	public double checkCurrentCertainty() {
-		return (((System.currentTimeMillis() - startTime) / 1000.0) / 60.0) * 100.0;
+		return 0.0;
 	}
 
 	private Material getMaterialDown(Location location) {

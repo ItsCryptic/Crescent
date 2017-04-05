@@ -80,7 +80,7 @@ packets:
   prevent: true
   a:
     # The amount of packets that are allowed to be sent per tick by a player.
-    maxPacketsPerTick: 1.1
+    maxPacketsPerTick: 1.9
 liquids:
   cheatConsider: 10
   prevent: true
@@ -101,3 +101,6 @@ autoclicker:
 antigravity:
     cheatConsider: 10
     prevent: true
+    a:
+      # The difference between what we expect the player's y value to be due to calculating gravity and what it actually is.
+      allowedMaxGravityDifference: 0.75

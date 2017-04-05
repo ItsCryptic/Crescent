@@ -142,13 +142,29 @@ public class Behaviour {
 	 */
 	public final int getHeightOfSpace() {
 		final int max = getPlayer().getWorld().getMaxHeight();
-		for (int y = 0; y < max; y++) {
+		for (int y = 0; y <= max; y++) {
 			final Location added = getPlayer().getLocation().clone().add(0, y, 0);
 			if (added.getBlock().getType().isSolid()) {
 				return y;
 			}
 		}
 		return max;
+	}
+
+	/**
+	 * @return The amount of blocks below a player until a solid block is
+	 *         reached.
+	 */
+	public final int countBlocksUntilBlockBelow() {
+		final int currentY = getPlayer().getLocation().getBlockY();
+		for (int y = currentY; y >= 0; y--) {
+			final Location here = getPlayer().getLocation().clone().subtract(0, y, 0);
+
+			if (here.getBlock().getType().isSolid()) {
+				return currentY - y;
+			}
+		}
+		return 0;
 	}
 
 	/**

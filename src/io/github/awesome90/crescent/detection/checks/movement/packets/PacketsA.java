@@ -1,6 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.movement.packets;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 
 import com.comphenix.protocol.PacketType;
@@ -47,8 +46,6 @@ public class PacketsA extends CheckVersion {
 					 * sends about 1 packet per tick.
 					 */
 					final double movementsPerTick = ((double) movements / ((double) difference / 1000.0)) / 20.0;
-
-					Bukkit.broadcastMessage("mps: " + movementsPerTick);
 
 					if (movementsPerTick > MAX_PACKETS_PER_TICK) {
 						// The player is sending more packets than allowed.
