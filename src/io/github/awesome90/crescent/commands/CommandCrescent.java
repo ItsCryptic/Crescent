@@ -18,6 +18,11 @@ public class CommandCrescent implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("crescent")) {
 
+			if (!sender.hasPermission("crescent.commands")) {
+				sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+				return true;
+			}
+
 			if (args.length == 0) {
 				String[] message = { ChatColor.BLUE + "Crescent",
 						ChatColor.WHITE + "/crescent learn - Enable learning mode.", ChatColor.WHITE

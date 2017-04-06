@@ -11,6 +11,7 @@ import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
+import io.github.awesome90.crescent.util.Helper;
 
 public class WaterWalkA extends CheckVersion {
 
@@ -39,7 +40,9 @@ public class WaterWalkA extends CheckVersion {
 				final Material from = getMaterialDown(pme.getFrom());
 				final Material to = getMaterialDown(pme.getTo());
 
-				if (from == Material.WATER_LILY || to == Material.WATER_LILY) {
+				// Avoid false positives.
+				if (from == Material.WATER_LILY || to == Material.WATER_LILY || Helper.isSlab(from)
+						|| Helper.isSlab(to)) {
 					return;
 				}
 

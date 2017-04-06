@@ -10,6 +10,13 @@ We used to have a Discord server, but I'm not going to have too much time to mai
 
 Suggestions can be sent to me on Discord at Awesome90#4116
 
+# Permissions
+
+Permissions for the plugin are as follows:
+
+- crescent.commands
+This gives the holder of the permission the access to use the main /crescent command and any other command of the plugin.
+
 # Features
 
 - Open source. Anyone can contribute.

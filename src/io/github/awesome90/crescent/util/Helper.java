@@ -1,6 +1,7 @@
 package io.github.awesome90.crescent.util;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.util.Vector;
 
 public class Helper {
@@ -21,6 +22,10 @@ public class Helper {
 		change.setDirection(target.subtract(start));
 
 		return change.getYaw();
+	}
+
+	public static boolean isSlab(Material material) {
+		return material.toString().toLowerCase().contains("slab");
 	}
 
 }
