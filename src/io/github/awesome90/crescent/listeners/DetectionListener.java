@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.listeners;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,8 +9,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 
@@ -31,22 +34,24 @@ public class DetectionListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 		final Player player = event.getPlayer();
 
-		/*
-		 * Performance is very bad at the moment due to this listener due to
-		 * testing. I will make it better soon.
-		 */
+		final Location from = event.getFrom(), to = event.getTo();
 
-		getCheckVersion(player, CheckType.SPEED, "A").call(event);
+		if (from.getBlockX() == to.getBlockX() && from.getBlockY() == to.getBlockY()
+				&& from.getBlockZ() == to.getBlockZ()) {
+			// If the player has only moved their head.
 
-		getCheckVersion(player, CheckType.FLY, "A").call(event);
+			getCheckVersion(player, CheckType.SPEED, "A").call(event);
 
-		getCheckVersion(player, CheckType.WATERWALK, "A").call(event);
+			getCheckVersion(player, CheckType.FLY, "A").call(event);
 
-		getCheckVersion(player, CheckType.NOFALL, "A").call(event);
+			getCheckVersion(player, CheckType.ANTIGRAVITY, "A").call(event);
 
-		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
+			getCheckVersion(player, CheckType.WATERWALK, "A").call(event);
 
-		getCheckVersion(player, CheckType.ANTIGRAVITY, "A").call(event);
+			getCheckVersion(player, CheckType.NOFALL, "A").call(event);
+
+			getCheckVersion(player, CheckType.SNEAK, "A").call(event);
+		}
 	}
 
 	@EventHandler
@@ -57,6 +62,8 @@ public class DetectionListener implements Listener {
 			getCheckVersion(player, CheckType.REACH, "A").call(event);
 
 			getCheckVersion(player, CheckType.CRITICALS, "A").call(event);
+
+			getCheckVersion(player, CheckType.AUTOCLICKER, "A").call(event);
 
 			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
 
@@ -123,10 +130,32 @@ public class DetectionListener implements Listener {
 	}
 
 	@EventHandler
-	public void onPlayerInteract(PlayerAnimationEvent event) {
+	public void onPlayerInteract(PlayerInteractEvent event) {
 		final Player player = event.getPlayer();
 
 		getCheckVersion(player, CheckType.AUTOCLICKER, "A").call(event);
+
+		getCheckVersion(player, CheckType.NOSWING, "A").call(event);
+	}
+
+	@EventHandler
+	public void onPlayerAnimation(PlayerAnimationEvent event) {
+		final Player player = event.getPlayer();
+
+		getCheckVersion(player, CheckType.AUTOCLICKER, "A").call(event);
+	}
+
+	@EventHandler
+	public void onInventoryClick(InventoryClickEvent event) {
+		if (!(event.getWhoClicked() instanceof Player)) {
+			return;
+		}
+
+		final Player player = (Player) event.getWhoClicked();
+
+		getCheckVersion(player, CheckType.INVENTORYTWEAKS, "A").call(event);
+
+		getCheckVersion(player, CheckType.INVENTORYTWEAKS, "B").call(event);
 	}
 
 	private Profile getProfile(Player player) {

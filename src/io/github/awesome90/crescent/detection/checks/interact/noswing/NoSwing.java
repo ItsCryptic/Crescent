@@ -8,6 +8,8 @@ public class NoSwing extends Check {
 
 	public NoSwing(Profile profile) {
 		super(profile, CheckType.NOSWING);
+
+		versions.add(new NoSwingA(this));
 	}
 
 }

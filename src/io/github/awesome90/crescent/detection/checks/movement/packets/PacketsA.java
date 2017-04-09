@@ -50,13 +50,14 @@ public class PacketsA extends CheckVersion {
 					if (movementsPerTick > MAX_PACKETS_PER_TICK) {
 						// The player is sending more packets than allowed.
 
-						final double certaintyPercentage = (movementsPerTick / MAX_PACKETS_PER_TICK) * 100.0;
+						final double perecentageDifference = ((movementsPerTick - MAX_PACKETS_PER_TICK)
+								/ MAX_PACKETS_PER_TICK) * 100.0;
 
 						/*
-						 * If we're over 100% sure, it's likely that the player
-						 * is cheating.
+						 * If the percentage difference is over 10% of what is
+						 * allowed, the player is likely to be cheating.
 						 */
-						if (certaintyPercentage > 100.0) {
+						if (perecentageDifference > 10.0) {
 							callback(true);
 						}
 
@@ -73,11 +74,6 @@ public class PacketsA extends CheckVersion {
 
 			movements++;
 		}
-	}
-
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
 	}
 
 }

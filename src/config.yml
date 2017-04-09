@@ -14,8 +14,6 @@ learnMode: false
 waterwalk:
   cheatConsider: 10
   prevent: true
-  a:
-    walkTime: 1000
 nofall:
   cheatConsider: 10
   prevent: true
@@ -54,6 +52,11 @@ killaura:
     disallowedAngle: 50.0
     # The amount of hits that are needed to verify an accurate picture of the player's hit angles.
     neededSamples: 5
+  learn:
+    # Whether you want to disable the killaura check that learns from you programming the system.Leave this disabled if you:
+    # 1) Don not understand what this is (read the Spigot resource post to learn about it!).
+    # 2) Don't have any data for the system to use, in which case program some data in!
+    disabled: false
 fastheal:
   cheatConsider: 10
   prevent: true
@@ -80,7 +83,7 @@ packets:
   prevent: true
   a:
     # The amount of packets that are allowed to be sent per tick by a player.
-    maxPacketsPerTick: 1.9
+    maxPacketsPerTick: 2.0
 liquids:
   cheatConsider: 10
   prevent: true
@@ -91,11 +94,13 @@ autoclicker:
   cheatConsider: 10
   prevent: true
   a:
+    # When the server should start considering CPS as suspiciously high.
+    suspiciousCPS: 10.0
     # When the player clicks, the time below will be how far we check into history for
     # suspicious activity.
-    reviewTime: 5000
+    reviewTime: 10000
     # The least amount of data needed to form a judgement on whether te player is using an autoclicker.
-    neededSamples: 10
+    neededSamples: 5
     # The allowed differences between click rates.
     allowedInterval: 1.25
 antigravity:
@@ -103,4 +108,9 @@ antigravity:
     prevent: true
     a:
       # The difference between what we expect the player's y value to be due to calculating gravity and what it actually is.
-      allowedMaxGravityDifference: 0.75
+      allowedMaxGravityDifference: 0.74
+inventorytweaks:
+    cheatConsider: 10
+    prevent: true
+    b:
+        bowlsPerSingleSlot: 10

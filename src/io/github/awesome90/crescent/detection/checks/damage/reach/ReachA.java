@@ -61,11 +61,6 @@ public class ReachA extends CheckVersion {
 		}
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return getStrangeReachPercentage();
-	}
-
 	/**
 	 * @return The percentage of all hits which had a larger than allowed reach.
 	 */

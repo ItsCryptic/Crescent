@@ -1,9 +1,11 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
@@ -14,52 +16,57 @@ import io.github.awesome90.crescent.util.Helper;
 
 public class KillauraLearn extends CheckVersion {
 
+	private static final boolean DISABLED = Crescent.getInstance().getConfig().getBoolean("killaura.learn.disabled");
+
 	public KillauraLearn(Check check) {
 		super(check, "Learn", "Uses data to calculate a value which is then stored for future retrieval.");
 	}
 
 	@Override
 	public void call(Event event) {
-		if (event instanceof EntityDamageByEntityEvent) {
-			final EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent) event;
+		if (!DISABLED) {
+			if (event instanceof EntityDamageByEntityEvent) {
+				final EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent) event;
 
-			final Player player = profile.getPlayer();
+				final Player player = profile.getPlayer();
 
-			final double reachSquared = Helper.getDistanceSquaredXZ(player.getLocation(),
-					edbe.getEntity().getLocation());
+				final double reachSquared = Helper.getDistanceSquaredXZ(player.getLocation(),
+						edbe.getEntity().getLocation());
 
-			// Get the ReachA CheckVersion.
-			final ReachA reach = (ReachA) profile.getCheck(CheckType.REACH).getCheckVersion("A");
+				// Get the ReachA CheckVersion.
+				final ReachA reach = (ReachA) profile.getCheck(CheckType.REACH).getCheckVersion("A");
 
-			final double averageReach = reach.getAverageSquaredReach();
+				final double averageReach = reach.getAverageSquaredReach();
 
-			final AutoclickerA autoclicker = (AutoclickerA) profile.getCheck(CheckType.AUTOCLICKER)
-					.getCheckVersion("A");
+				final AutoclickerA autoclicker = (AutoclickerA) profile.getCheck(CheckType.AUTOCLICKER)
+						.getCheckVersion("A");
 
-			final double currentDamageCPS = autoclicker.getStore().getCurrentClickRate();
+				final double currentDamageCPS = autoclicker.getStore().getCurrentClickRate();
 
-			final int ping = profile.getPing();
+				final int ping = profile.getPing();
 
-			// Add one, as this can't be zero as it will mess up our
-			// calculations if it is.
-			final double angle = Helper.getYawBetween(profile.getPlayer().getEyeLocation(),
-					edbe.getEntity().getLocation()) + 1;
+				// Add one, as this can't be zero as it will mess up our
+				// calculations if it is.
+				final double angle = Helper.getYawBetween(profile.getPlayer().getEyeLocation(),
+						edbe.getEntity().getLocation()) + 1;
 
-			final double value = reachSquared * averageReach * angle * ((ping + 100) / 100) * currentDamageCPS;
+				final double value = reachSquared * averageReach * angle * ((ping + 100) / 100) * currentDamageCPS;
 
-			final Learn learn = new Learn(type, value);
+				final Learn learn = new Learn(type, value);
 
-			learn.storeData(profile.getKnownCheating());
+				learn.storeData(profile.getKnownCheating());
 
-			final double comparison = learn.compare();
+				final double comparison = learn.compare();
 
-			callback(comparison > 100.0);
+				Bukkit.broadcastMessage("learn comparison: " + comparison);
+
+				if (comparison > 100.0) {
+					callback(true);
+				} else {
+					callback(false);
+				}
+			}
 		}
-	}
-
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
 	}
 
 }

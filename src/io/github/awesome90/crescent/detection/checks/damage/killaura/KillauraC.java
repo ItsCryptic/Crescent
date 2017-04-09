@@ -48,11 +48,6 @@ public class KillauraC extends CheckVersion {
 		}
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
-	}
-
 	private double getAverageAngle() {
 		int processed = 0;
 		double average = 0.0;

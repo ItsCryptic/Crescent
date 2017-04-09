@@ -28,9 +28,4 @@ public class InventoryTweaksA extends CheckVersion {
 		}
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
-	}
-
 }

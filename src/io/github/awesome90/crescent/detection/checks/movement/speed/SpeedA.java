@@ -72,20 +72,11 @@ public class SpeedA extends CheckVersion {
 														 * or has been in the
 														 * last half a second.
 														 */) {
-				if (distance > 1.25) {
-					callback(true);
-				}
+				callback(distance > 1.25);
 			} else {
-				if (distance > 0.40) {
-					callback(true);
-				}
+				callback(distance > 0.40);
 			}
 		}
-	}
-
-	@Override
-	public double checkCurrentCertainty() {
-		return 0.0;
 	}
 
 }

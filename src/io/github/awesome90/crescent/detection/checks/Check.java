@@ -39,10 +39,10 @@ public abstract class Check {
 	public final double getCertainty() {
 		double total = 0.0;
 		for (CheckVersion version : versions) {
-			total += version.calculateOverallCertainty();
+			total += version.calculateCertainty();
 		}
 
-		return (total / versions.size()) * 100.0;
+		return (total / versions.size() * 100.0) * 100.0;
 	}
 
 	/**

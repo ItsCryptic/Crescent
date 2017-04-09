@@ -43,9 +43,4 @@ public class AntiDamageA extends CheckVersion {
 		}
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
-	}
-
 }

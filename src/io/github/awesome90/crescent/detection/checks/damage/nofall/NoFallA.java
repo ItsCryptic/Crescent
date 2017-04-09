@@ -1,12 +1,13 @@
 package io.github.awesome90.crescent.detection.checks.damage.nofall;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -20,20 +21,14 @@ import io.github.awesome90.crescent.info.Profile;
 
 public class NoFallA extends CheckVersion {
 
-	/**
-	 * The total damage that a player should have taken.
-	 */
+	private boolean fallCancelled;
 	private double totalDamage;
-	/**
-	 * The difference the damage that a player should have taken and the damage
-	 * that they actually took.
-	 */
 	private double totalDisplacedHealth;
 
 	public NoFallA(Check check) {
 		super(check, "A", "Checks the damage that the player took compared to the damage that they should have taken.");
 		this.totalDamage = totalDisplacedHealth = 0.0;
-		this.totalDisplacedHealth = 0.0;
+		this.fallCancelled = false;
 	}
 
 	@Override
@@ -43,7 +38,11 @@ public class NoFallA extends CheckVersion {
 
 			final Player player = profile.getPlayer();
 
-			if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
+			/*
+			 * Players cannot take fall damage when in creative or spectator
+			 * mode.
+			 */
+			if (!profile.getBehaviour().isInCreativeOrSpectator()) {
 
 				final Material from = pme.getFrom().getBlock().getRelative(BlockFace.DOWN).getType();
 				final Material to = pme.getTo().getBlock().getRelative(BlockFace.DOWN).getType();
@@ -57,9 +56,6 @@ public class NoFallA extends CheckVersion {
 					 */
 					return;
 				}
-
-				// Bukkit.broadcastMessage("from: " + from.toString() + ", to: "
-				// + to.toString());
 
 				// The player has fallen far enough to take damage.
 
@@ -84,18 +80,17 @@ public class NoFallA extends CheckVersion {
 						 * is expected to be.
 						 */
 						Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), () -> {
-							callback(player.getHealth() > expected);
+							callback(!fallCancelled && player.getHealth() > expected);
 						}, 5L);
 
 					}
 				}
 			}
-		}
-	}
+		} else if (event instanceof EntityDamageEvent) {
+			final EntityDamageEvent ede = (EntityDamageEvent) event;
 
-	@Override
-	public double checkCurrentCertainty() {
-		return (totalDisplacedHealth / totalDamage) * 100.0;
+			fallCancelled = ede.getCause() == DamageCause.FALL && ede.isCancelled();
+		}
 	}
 
 	/**

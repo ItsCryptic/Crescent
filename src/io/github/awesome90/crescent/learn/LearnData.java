@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -76,8 +74,6 @@ public class LearnData {
 		} else if (learn.getValue() > currentHighRange) {
 			fc.set(cheatPath + "CurrentHighRange", learn.getValue());
 		}
-
-		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "average: " + currentMean + " total samples: " + totalSamples);
 
 		// Calculate the new average.
 		double updateMean = (currentMean + learn.getValue()) / 2.0;

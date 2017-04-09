@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.behaviour;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -155,16 +156,20 @@ public class Behaviour {
 	 * @return The amount of blocks below a player until a solid block is
 	 *         reached.
 	 */
-	public final int countBlocksUntilBlockBelow() {
-		final int currentY = getPlayer().getLocation().getBlockY();
-		for (int y = currentY; y >= 0; y--) {
-			final Location here = getPlayer().getLocation().clone().subtract(0, y, 0);
-
-			if (here.getBlock().getType().isSolid()) {
-				return currentY - y;
+	public final int getBlocksBelowGround() {
+		final int playerY = getPlayer().getLocation().getBlockY();
+		for (int y = playerY; y >= 0; y--) {
+			final Location added = getPlayer().getLocation().clone().subtract(0, playerY - y, 0);
+			if (added.getBlock().getType().isSolid()) {
+				return playerY - y;
 			}
 		}
 		return 0;
+	}
+
+	public final boolean isInCreativeOrSpectator() {
+		final GameMode mode = getPlayer().getGameMode();
+		return mode == GameMode.CREATIVE || mode == GameMode.SPECTATOR;
 	}
 
 	/**

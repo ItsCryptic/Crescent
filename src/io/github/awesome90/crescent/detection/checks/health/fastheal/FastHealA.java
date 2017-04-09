@@ -75,9 +75,4 @@ public class FastHealA extends CheckVersion {
 		return !(amount == 1.0 && current - lastTime < regenRate);
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
-	}
-
 }

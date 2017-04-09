@@ -1,6 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.movement.fly;
 
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -33,8 +32,7 @@ public class FlyA extends CheckVersion {
 
 			final Player player = profile.getPlayer();
 
-			if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR
-					&& !player.getAllowFlight()) {
+			if (!profile.getBehaviour().isInCreativeOrSpectator() || !player.getAllowFlight()) {
 				final PlayerMoveEvent pme = (PlayerMoveEvent) event;
 
 				final double distanceSquared = pme.getTo().toVector().distanceSquared(pme.getFrom().toVector());
@@ -88,11 +86,6 @@ public class FlyA extends CheckVersion {
 
 			}
 		}
-	}
-
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
 	}
 
 }

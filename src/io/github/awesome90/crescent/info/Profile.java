@@ -19,6 +19,8 @@ import io.github.awesome90.crescent.detection.checks.damage.reach.Reach;
 import io.github.awesome90.crescent.detection.checks.health.fastheal.FastHeal;
 import io.github.awesome90.crescent.detection.checks.interact.autoclicker.Autoclicker;
 import io.github.awesome90.crescent.detection.checks.interact.fastbow.Fastbow;
+import io.github.awesome90.crescent.detection.checks.interact.noswing.NoSwing;
+import io.github.awesome90.crescent.detection.checks.inventory.inventorytweaks.InventoryTweaks;
 import io.github.awesome90.crescent.detection.checks.movement.antigravity.AntiGravity;
 import io.github.awesome90.crescent.detection.checks.movement.antivelocity.AntiVelocity;
 import io.github.awesome90.crescent.detection.checks.movement.fly.Fly;
@@ -92,6 +94,8 @@ public class Profile {
 		checks.add(new AntiDamage(this));
 		checks.add(new Autoclicker(this));
 		checks.add(new AntiGravity(this));
+		checks.add(new NoSwing(this));
+		checks.add(new InventoryTweaks(this));
 	}
 
 	/**

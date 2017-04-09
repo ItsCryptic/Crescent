@@ -46,11 +46,6 @@ public class InventoryTweaksB extends CheckVersion {
 		}
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
-	}
-
 	/**
 	 * @return The chance of a player using autosoup on the premise that they
 	 *         are stacking bowls in their inventory. Take into account: the

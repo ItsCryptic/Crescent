@@ -47,6 +47,10 @@ public class AutoclickerStore {
 		totalClicks++;
 	}
 
+	public int getTotalClicks() {
+		return totalClicks;
+	}
+
 	public double getCurrentClickRate() {
 		return currentClickRate;
 	}

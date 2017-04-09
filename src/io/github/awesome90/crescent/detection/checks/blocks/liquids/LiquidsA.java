@@ -23,9 +23,4 @@ public class LiquidsA extends CheckVersion {
 		}
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
-	}
-
 }

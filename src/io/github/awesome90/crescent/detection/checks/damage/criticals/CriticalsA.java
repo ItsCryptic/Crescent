@@ -41,12 +41,7 @@ public class CriticalsA extends CheckVersion {
 	 */
 	private boolean isValidCritical() {
 		final Behaviour behaviour = profile.getBehaviour();
-		return !behaviour.isOnGround() && behaviour.getMotion().getFallDistance() > 0.0;
-	}
-
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
+		return behaviour.getMotion().getFallDistance() > 0.0;
 	}
 
 }

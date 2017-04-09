@@ -1,21 +1,17 @@
 package io.github.awesome90.crescent.detection.checks.movement.waterwalk;
 
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 import io.github.awesome90.crescent.util.Helper;
 
 public class WaterWalkA extends CheckVersion {
-
-	private static final int WALK_TIME = Crescent.getInstance().getConfig().getInt("waterwalk.a.walkTime");
 
 	public WaterWalkA(Check check) {
 		super(check, "A", "Checks whether the player is walking on water");
@@ -27,15 +23,10 @@ public class WaterWalkA extends CheckVersion {
 			final PlayerMoveEvent pme = (PlayerMoveEvent) event;
 
 			final Behaviour behaviour = profile.getBehaviour();
-			final GameMode mode = profile.getPlayer().getGameMode();
 
-			if ((mode != GameMode.CREATIVE && mode != GameMode.SPECTATOR) && !profile.getPlayer().isInsideVehicle()
-					&& behaviour.isOnLiquidBlock() && !behaviour.isInWater()) {
-				/*
-				 * Do not execute this statement if the player is not descending
-				 * (this could lead to false positives) and if the player is in
-				 * water (and not standing on it).
-				 */
+			if (!behaviour.getMotion().isDescending() && !behaviour.isInCreativeOrSpectator()
+					&& !profile.getPlayer().isInsideVehicle() && behaviour.isOnLiquidBlock()
+					&& !behaviour.isInWater()) {
 
 				final Material from = getMaterialDown(pme.getFrom());
 				final Material to = getMaterialDown(pme.getTo());
@@ -62,10 +53,6 @@ public class WaterWalkA extends CheckVersion {
 	 * @return The percentage of a minute that the player has stood on water
 	 *         for.
 	 */
-	@Override
-	public double checkCurrentCertainty() {
-		return 0.0;
-	}
 
 	private Material getMaterialDown(Location location) {
 		return location.getBlock().getRelative(BlockFace.DOWN).getType();

@@ -29,11 +29,6 @@ public class KillauraB extends CheckVersion {
 		}
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
-	}
-
 	/**
 	 * @param check
 	 *            The entity to check whether

@@ -10,12 +10,4 @@ public interface CheckApproach {
 	 *            The event the check will need to analyse.
 	 */
 	void call(Event event);
-
-	/**
-	 * Each CheckVersion handles this method the way that they need to.
-	 * 
-	 * @return The certainty at the current moment (of a particular check
-	 *         cycle).
-	 */
-	double checkCurrentCertainty();
 }

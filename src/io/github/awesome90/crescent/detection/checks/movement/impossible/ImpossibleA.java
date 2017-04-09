@@ -33,8 +33,4 @@ public class ImpossibleA extends CheckVersion {
 		}
 	}
 
-	@Override
-	public double checkCurrentCertainty() {
-		return (improperCalls / totalCalls) * 100.0;
-	}
 }

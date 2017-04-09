@@ -24,7 +24,6 @@ public class AntiVelocityA extends CheckVersion {
 		 * Thanks Eyremba for identifying these sources of false positives :D
 		 * (https://github.com/Eyremba).
 		 */
-		Bukkit.broadcastMessage("height of space: " + behaviour.getHeightOfSpace());
 		if (behaviour.isOnLadder() || behaviour.isInWeb() || behaviour.getHeightOfSpace() <= 2) {
 			return;
 		}
@@ -35,7 +34,7 @@ public class AntiVelocityA extends CheckVersion {
 
 			final double originalY = player.getLocation().getY();
 
-			final double ticksToMove = Math.min((profile.getPing() * profile.getPing()) + 50.0, 300.0) / 20.0;
+			final double ticksToMove = (Math.pow(profile.getPing(), 2.0) + 50.0) / 20.0;
 
 			final double expectedYVel = pve.getVelocity().getY();
 
@@ -44,6 +43,7 @@ public class AntiVelocityA extends CheckVersion {
 			if (expectedYVel > 0.1) {
 				// Check a little later.
 				new BukkitRunnable() {
+					// Number of ticks that have been counted so far.
 					int time = 0;
 
 					@Override
@@ -52,6 +52,7 @@ public class AntiVelocityA extends CheckVersion {
 
 						final double current = player.getLocation().getY() - originalY;
 						if (current > expectedYVel || expectedYVel - current < 0.20) {
+							callback(false);
 							cancel();
 							return;
 						}
@@ -68,11 +69,6 @@ public class AntiVelocityA extends CheckVersion {
 			}
 		}
 
-	}
-
-	@Override
-	public double checkCurrentCertainty() {
-		return 0;
 	}
 
 }
