@@ -1,5 +1,5 @@
 name: Crescent
-main: io.github.awesome90.crescent.Crescent
+main: io.github.davidm98.crescent.Crescent
 version: 1.0
 author: Awesome90
 depend: [ProtocolLib]
