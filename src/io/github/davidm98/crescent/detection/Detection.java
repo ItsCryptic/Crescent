@@ -3,10 +3,14 @@ package io.github.davidm98.crescent.detection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
+import io.github.davidm98.crescent.Crescent;
 import io.github.davidm98.crescent.detection.checks.Check;
 import io.github.davidm98.crescent.info.Profile;
 
 public class Detection {
+
+	private static final int ALERT_INTERVAL = profile.getLastAlertTime() < Crescent.getInstance().getConfig()
+			.getInt("alertInterval");
 
 	private final Profile profile;
 	private final Check check;
@@ -30,6 +34,10 @@ public class Detection {
 	}
 
 	public void alert() {
+		if (System.currentTimeMillis() - profile.getLastAlertTime() < ALERT_INTERVAL) {
+			return;
+		}
+
 		final String message = ChatColor.RED + profile.getPlayer().getName() + " failed the "
 				+ check.getType().getName().toLowerCase() + checkVersion + " check. (certainty: " + check.getCertainty()
 				+ "%, ping: " + profile.getPing() + ")";
@@ -37,6 +45,8 @@ public class Detection {
 		// Yay! We get to use Java 8 streams! :D
 		Bukkit.getOnlinePlayers().stream().filter(player -> player.isOp())
 				.forEach(player -> player.sendMessage(message));
+
+		profile.setLastAlertTime(System.currentTimeMillis());
 	}
 
 	public Check getCheck() {

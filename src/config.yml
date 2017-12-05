@@ -11,6 +11,8 @@
 
 # Whether Crescent should take into account actions and record them to use for future checks.
 learnMode: false
+# The delay between alert messages for each player (in milliseconds)
+alertInterval: 1000
 waterwalk:
   cheatConsider: 10
   prevent: true

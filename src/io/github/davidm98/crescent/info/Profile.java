@@ -56,6 +56,7 @@ public class Profile {
 	// The time the player joined the server on their current session.
 	private final long joinTime;
 	private ArrayList<Check> checks;
+	private long lastAlertTime;
 
 	// Whether a moderator has flagged this player as cheating so we can use the
 	// learning feature.
@@ -70,7 +71,8 @@ public class Profile {
 		this.checks = new ArrayList<Check>(CheckType.values().length);
 
 		this.knownCheating = KnownCheating.UNDEFINED;
-
+		this.lastAlertTime = 0;
+		
 		addChecks();
 	}
 
@@ -164,6 +166,14 @@ public class Profile {
 
 	public void setKnownCheating(KnownCheating knownCheating) {
 		this.knownCheating = knownCheating;
+	}
+	
+	public final long getLastAlertTime() {
+		return lastAlertTime;
+	}
+	
+	public void setLastAlertTime(long lastAlertTime) {
+		this.lastAlertTime = lastAlertTime;F
 	}
 
 }
